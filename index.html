@@ -1,0 +1,2069 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/filter.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
+        <style>
+        #map {
+            width: 1689px;
+            height: 876px;
+        }
+        </style>
+        <title>Геоданные с data.nextgis.com</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/tailDT.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
+        <script src="data/_1.js"></script>
+        <script src="data/_2.js"></script>
+        <script src="data/boundarypolygonlvl2_3.js"></script>
+        <script src="data/NP_4.js"></script>
+        <script src="data/boundaryboundarypolygon_5.js"></script>
+        <script src="data/_6.js"></script>
+        <script src="data/__7.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[53.24616020585465,76.15170846945796],[57.92080571562662,92.13923988518388]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_OpenStreetMap_0');
+        map.getPane('pane_OpenStreetMap_0').style.zIndex = 400;
+        var layer_OpenStreetMap_0 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OpenStreetMap_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OpenStreetMap_0;
+        map.addLayer(layer_OpenStreetMap_0);
+        function pop__1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME'] !== null ? autolinker.link(feature.properties['NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_EN'] !== null ? autolinker.link(feature.properties['NAME_EN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_RU'] !== null ? autolinker.link(feature.properties['NAME_RU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NATURAL'] !== null ? autolinker.link(feature.properties['NATURAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WATERWAY'] !== null ? autolinker.link(feature.properties['WATERWAY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WETLAND'] !== null ? autolinker.link(feature.properties['WETLAND'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OSM_TYPE'] !== null ? autolinker.link(feature.properties['OSM_TYPE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OSM_ID'] !== null ? autolinker.link(feature.properties['OSM_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+        function style__1_0(feature) {
+            var context = {
+                feature: feature,
+                variables: {}
+            };
+            // Start of if blocks and style check logic
+            if (exp__1rule0_eval_expression(context)) {
+                  return {
+                pane: 'pane__1',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(167,211,214,1.0)',
+                interactive: true,
+            };
+                }
+            else {
+                return {fill: false, stroke: false};
+            }
+        }
+        map.createPane('pane__1');
+        map.getPane('pane__1').style.zIndex = 401;
+        map.getPane('pane__1').style['mix-blend-mode'] = 'normal';
+        var layer__1 = new L.geoJson(json__1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json__1',
+            layerName: 'layer__1',
+            pane: 'pane__1',
+            onEachFeature: pop__1,
+            style: style__1_0,
+        });
+        bounds_group.addLayer(layer__1);
+        map.addLayer(layer__1);
+        function pop__2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME'] !== null ? autolinker.link(feature.properties['NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_EN'] !== null ? autolinker.link(feature.properties['NAME_EN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_RU'] !== null ? autolinker.link(feature.properties['NAME_RU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WATERWAY'] !== null ? autolinker.link(feature.properties['WATERWAY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OSM_TYPE'] !== null ? autolinker.link(feature.properties['OSM_TYPE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OSM_ID'] !== null ? autolinker.link(feature.properties['OSM_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style__2_0(feature) {
+            switch(String(feature.properties['WATERWAY'])) {
+                case 'river':
+                    return {
+                pane: 'pane__2',
+                opacity: 1,
+                color: 'rgba(181,210,214,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane__2');
+        map.getPane('pane__2').style.zIndex = 402;
+        map.getPane('pane__2').style['mix-blend-mode'] = 'normal';
+        var layer__2 = new L.geoJson(json__2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json__2',
+            layerName: 'layer__2',
+            pane: 'pane__2',
+            onEachFeature: pop__2,
+            style: style__2_0,
+        });
+        bounds_group.addLayer(layer__2);
+        map.addLayer(layer__2);
+        function pop_boundarypolygonlvl2_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME'] !== null ? autolinker.link(feature.properties['NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_EN'] !== null ? autolinker.link(feature.properties['NAME_EN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_RU'] !== null ? autolinker.link(feature.properties['NAME_RU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_LVL'] !== null ? autolinker.link(feature.properties['ADMIN_LVL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OSM_TYPE'] !== null ? autolinker.link(feature.properties['OSM_TYPE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OSM_ID'] !== null ? autolinker.link(feature.properties['OSM_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L1D'] !== null ? autolinker.link(feature.properties['ADMIN_L1D'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L1'] !== null ? autolinker.link(feature.properties['ADMIN_L1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L2D'] !== null ? autolinker.link(feature.properties['ADMIN_L2D'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L2'] !== null ? autolinker.link(feature.properties['ADMIN_L2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L3D'] !== null ? autolinker.link(feature.properties['ADMIN_L3D'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L3'] !== null ? autolinker.link(feature.properties['ADMIN_L3'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L4D'] !== null ? autolinker.link(feature.properties['ADMIN_L4D'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L4'] !== null ? autolinker.link(feature.properties['ADMIN_L4'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L5D'] !== null ? autolinker.link(feature.properties['ADMIN_L5D'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L5'] !== null ? autolinker.link(feature.properties['ADMIN_L5'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L6D'] !== null ? autolinker.link(feature.properties['ADMIN_L6D'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L6'] !== null ? autolinker.link(feature.properties['ADMIN_L6'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L7D'] !== null ? autolinker.link(feature.properties['ADMIN_L7D'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L7'] !== null ? autolinker.link(feature.properties['ADMIN_L7'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L8D'] !== null ? autolinker.link(feature.properties['ADMIN_L8D'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L8'] !== null ? autolinker.link(feature.properties['ADMIN_L8'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L9D'] !== null ? autolinker.link(feature.properties['ADMIN_L9D'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L9'] !== null ? autolinker.link(feature.properties['ADMIN_L9'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L10D'] !== null ? autolinker.link(feature.properties['ADMIN_L10D'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADMIN_L10'] !== null ? autolinker.link(feature.properties['ADMIN_L10'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['oktmo'] !== null ? autolinker.link(feature.properties['oktmo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['okato'] !== null ? autolinker.link(feature.properties['okato'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_boundarypolygonlvl2_3_0() {
+            return {
+                pane: 'pane_boundarypolygonlvl2_3',
+                opacity: 1,
+                color: 'rgba(208,113,113,0.6823529411764706)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 6.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(114,155,111,0.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_boundarypolygonlvl2_3');
+        map.getPane('pane_boundarypolygonlvl2_3').style.zIndex = 403;
+        map.getPane('pane_boundarypolygonlvl2_3').style['mix-blend-mode'] = 'normal';
+        var layer_boundarypolygonlvl2_3 = new L.geoJson(json_boundarypolygonlvl2_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_boundarypolygonlvl2_3',
+            layerName: 'layer_boundarypolygonlvl2_3',
+            pane: 'pane_boundarypolygonlvl2_3',
+            onEachFeature: pop_boundarypolygonlvl2_3,
+            style: style_boundarypolygonlvl2_3_0,
+        });
+        bounds_group.addLayer(layer_boundarypolygonlvl2_3);
+        map.addLayer(layer_boundarypolygonlvl2_3);
+        function pop_NP_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME'] !== null ? autolinker.link(feature.properties['NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_EN'] !== null ? autolinker.link(feature.properties['NAME_EN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INT_NAME'] !== null ? autolinker.link(feature.properties['INT_NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_RU'] !== null ? autolinker.link(feature.properties['NAME_RU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OFFICIAL_S'] !== null ? autolinker.link(feature.properties['OFFICIAL_S'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PLACE'] !== null ? autolinker.link(feature.properties['PLACE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['A_CNTR'] !== null ? autolinker.link(feature.properties['A_CNTR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['A_RGN'] !== null ? autolinker.link(feature.properties['A_RGN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['A_DSTRCT'] !== null ? autolinker.link(feature.properties['A_DSTRCT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">A_PSTCD</th>\
+                        <td>' + (feature.properties['A_PSTCD'] !== null ? autolinker.link(feature.properties['A_PSTCD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POPULATION'] !== null ? autolinker.link(feature.properties['POPULATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OSM_TYPE'] !== null ? autolinker.link(feature.properties['OSM_TYPE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OSM_ID'] !== null ? autolinker.link(feature.properties['OSM_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>oktmo</strong><br />' + (feature.properties['oktmo'] !== null ? autolinker.link(feature.properties['oktmo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['okato'] !== null ? autolinker.link(feature.properties['okato'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Centre'] !== null ? autolinker.link(feature.properties['Centre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+        function style_NP_4_0(feature) {
+            var context = {
+                feature: feature,
+                variables: {}
+            };
+            // Start of if blocks and style check logic
+            if (exp_NP_4rule0_eval_expression(context)) {
+                  return {
+                pane: 'pane_NP_4',
+                radius: 6.8,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_NP_4rule1_eval_expression(context)) {
+                  return {
+                pane: 'pane_NP_4',
+                radius: 4.8,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            };
+                }
+            else {
+                return {fill: false, stroke: false};
+            }
+        }
+        function style_NP_4_1(feature) {
+            var context = {
+                feature: feature,
+                variables: {}
+            };
+            // Start of if blocks and style check logic
+            if (exp_NP_4rule0_eval_expression(context)) {
+                  return {
+                pane: 'pane_NP_4',
+                radius: 3.41666,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,0,0,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_NP_4rule1_eval_expression(context)) {
+                  return {
+                pane: 'pane_NP_4',
+                radius: 1.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,0,0,1.0)',
+                interactive: true,
+            };
+                }
+            else {
+                return {fill: false, stroke: false};
+            }
+        }
+        map.createPane('pane_NP_4');
+        map.getPane('pane_NP_4').style.zIndex = 404;
+        map.getPane('pane_NP_4').style['mix-blend-mode'] = 'normal';
+        var layer_NP_4 = new L.geoJson.multiStyle(json_NP_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_NP_4',
+            layerName: 'layer_NP_4',
+            pane: 'pane_NP_4',
+            onEachFeature: pop_NP_4,
+            pointToLayers: [function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_NP_4_0(feature));
+            },function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_NP_4_1(feature));
+            },
+        ]});
+        bounds_group.addLayer(layer_NP_4);
+        map.addLayer(layer_NP_4);
+        function pop_boundaryboundarypolygon_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Регион'] !== null ? autolinker.link(feature.properties['Регион'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ФИО</th>\
+                        <td>' + (feature.properties['ФИО'] !== null ? autolinker.link(feature.properties['ФИО'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Награды</th>\
+                        <td>' + (feature.properties['Награды'] !== null ? autolinker.link(feature.properties['Награды'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Фото</th>\
+                        <td>' + (feature.properties['Фото'] !== null ? '<img src="images/' + String(feature.properties['Фото']).replace(/[\\\/:]/g, '_').trim() + '">' : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_boundaryboundarypolygon_5_0() {
+            return {
+                pane: 'pane_boundaryboundarypolygon_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(243,166,178,0.10980392156862745)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_boundaryboundarypolygon_5');
+        map.getPane('pane_boundaryboundarypolygon_5').style.zIndex = 405;
+        map.getPane('pane_boundaryboundarypolygon_5').style['mix-blend-mode'] = 'normal';
+        var layer_boundaryboundarypolygon_5 = new L.geoJson(json_boundaryboundarypolygon_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_boundaryboundarypolygon_5',
+            layerName: 'layer_boundaryboundarypolygon_5',
+            pane: 'pane_boundaryboundarypolygon_5',
+            onEachFeature: pop_boundaryboundarypolygon_5,
+            style: style_boundaryboundarypolygon_5_0,
+        });
+        bounds_group.addLayer(layer_boundaryboundarypolygon_5);
+        map.addLayer(layer_boundaryboundarypolygon_5);
+        function pop__6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Район'] !== null ? autolinker.link(feature.properties['Район'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ФИО</th>\
+                        <td>' + (feature.properties['ФИО'] !== null ? autolinker.link(feature.properties['ФИО'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Специализация</th>\
+                        <td>' + (feature.properties['Специализация'] !== null ? autolinker.link(feature.properties['Специализация'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Награды</th>\
+                        <td>' + (feature.properties['Награды'] !== null ? autolinker.link(feature.properties['Награды'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Фото'] !== null ? '<img src="images/' + String(feature.properties['Фото']).replace(/[\\\/:]/g, '_').trim() + '">' : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style__6_0() {
+            return {
+                pane: 'pane__6',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(243,166,178,0.10980392156862745)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane__6');
+        map.getPane('pane__6').style.zIndex = 406;
+        map.getPane('pane__6').style['mix-blend-mode'] = 'normal';
+        var layer__6 = new L.geoJson(json__6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json__6',
+            layerName: 'layer__6',
+            pane: 'pane__6',
+            onEachFeature: pop__6,
+            style: style__6_0,
+        });
+        bounds_group.addLayer(layer__6);
+        map.addLayer(layer__6);
+        function pop___7(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Район'] !== null ? autolinker.link(feature.properties['Район'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ФИО</th>\
+                        <td>' + (feature.properties['ФИО'] !== null ? autolinker.link(feature.properties['ФИО'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Специализация</th>\
+                        <td>' + (feature.properties['Специализация'] !== null ? autolinker.link(feature.properties['Специализация'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Награды</th>\
+                        <td>' + (feature.properties['Награды'] !== null ? autolinker.link(feature.properties['Награды'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['фото'] !== null ? '<img src="images/' + String(feature.properties['фото']).replace(/[\\\/:]/g, '_').trim() + '">' : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style___7_0() {
+            return {
+                pane: 'pane___7',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(243,166,178,0.11372549019607843)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane___7');
+        map.getPane('pane___7').style.zIndex = 407;
+        map.getPane('pane___7').style['mix-blend-mode'] = 'normal';
+        var layer___7 = new L.geoJson(json___7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json___7',
+            layerName: 'layer___7',
+            pane: 'pane___7',
+            onEachFeature: pop___7,
+            style: style___7_0,
+        });
+        bounds_group.addLayer(layer___7);
+        map.addLayer(layer___7);
+            var title = new L.Control();
+            title.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info');
+                this.update();
+                return this._div;
+            };
+            title.update = function () {
+                this._div.innerHTML = '<h2>Геоданные с data.nextgis.com</h2>';
+            };
+            title.addTo(map);
+        map.on("zoomend", function(){
+
+                if (map.hasLayer(layer__2)) {
+                    if (map.getZoom() <= 12 && map.getZoom() >= 19) {
+                        layer__2.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer__2.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+        });
+        setBounds();
+        var i = 0;
+        layer__2.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NAME'] !== null?String('<div style="color: #1f63b0; font-size: 7pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['NAME']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css__2'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_NP_4.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NAME'] !== null?String('<div style="color: #000000; font-size: 9pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['NAME']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_NP_4'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_boundaryboundarypolygon_5.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NAME'] !== null?String('<div style="color: #323232; font-size: 10pt; font-family: \'Open Sans\', sans-serif;">' + layer.feature.properties['NAME']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_boundaryboundarypolygon_5'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+                if (map.hasLayer(layer__2)) {
+                    if (map.getZoom() <= 12 && map.getZoom() >= 19) {
+                        layer__2.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer__2.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+        var mapDiv = document.getElementById('map');
+        var row = document.createElement('div');
+        row.className="row";
+        row.id="all";
+        row.style.height = "100%";
+        var col1 = document.createElement('div');
+        col1.className="col9";
+        col1.id = "mapWindow";
+        col1.style.height = "99%";
+        col1.style.width = "80%";
+        col1.style.display = "inline-block";
+        var col2 = document.createElement('div');
+        col2.className="col3";
+        col2.id = "menu";
+        col2.style.display = "inline-block";
+        mapDiv.parentNode.insertBefore(row, mapDiv);
+        document.getElementById("all").appendChild(col1);
+        document.getElementById("all").appendChild(col2);
+        col1.appendChild(mapDiv)
+        var Filters = {"NAME_RU": "str","NAME": "str"};
+        function filterFunc() {
+          map.eachLayer(function(lyr){
+          if ("options" in lyr && "dataVar" in lyr["options"]){
+            features = this[lyr["options"]["dataVar"]].features.slice(0);
+            try{
+              for (key in Filters){
+                keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
+                if (Filters[key] == "str" || Filters[key] == "bool"){
+                  var selection = [];
+                  var options = document.getElementById("sel_" + keyS).options
+                  for (var i=0; i < options.length; i++) {
+                    if (options[i].selected) selection.push(options[i].value);
+                  }
+                    try{
+                      if (key in features[0].properties){
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
+                }
+              }
+            } catch(err){
+            }
+          this[lyr["options"]["layerName"]].clearLayers();
+          this[lyr["options"]["layerName"]].addData(features);
+        var i = 0;
+        layer__2.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NAME'] !== null?String('<div style="color: #1f63b0; font-size: 7pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['NAME']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css__2'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_NP_4.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NAME'] !== null?String('<div style="color: #000000; font-size: 9pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['NAME']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_NP_4'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_boundaryboundarypolygon_5.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NAME'] !== null?String('<div style="color: #323232; font-size: 10pt; font-family: \'Open Sans\', sans-serif;">' + layer.feature.properties['NAME']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_boundaryboundarypolygon_5'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+          }
+          })
+        }
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_NAME_RU = document.createElement('div');
+            div_NAME_RU.id = "div_NAME_RU";
+            div_NAME_RU.className= "filterselect";
+            document.getElementById("menu").appendChild(div_NAME_RU);
+            sel_NAME_RU = document.createElement('select');
+            sel_NAME_RU.multiple = true;
+            sel_NAME_RU.size = 10;
+            sel_NAME_RU.id = "sel_NAME_RU";
+            var NAME_RU_options_str = "<option value='' unselected></option>";
+            sel_NAME_RU.onchange = function(){filterFunc()};
+            NAME_RU_options_str  += '<option value="NULL">NULL</option>';
+            NAME_RU_options_str  += '<option value="Анюшка">Анюшка</option>';
+            NAME_RU_options_str  += '<option value="Ача">Ача</option>';
+            NAME_RU_options_str  += '<option value="Баган">Баган</option>';
+            NAME_RU_options_str  += '<option value="Бакса">Бакса</option>';
+            NAME_RU_options_str  += '<option value="Балта">Балта</option>';
+            NAME_RU_options_str  += '<option value="Барабинск">Барабинск</option>';
+            NAME_RU_options_str  += '<option value="Бердь">Бердь</option>';
+            NAME_RU_options_str  += '<option value="Берёзовка">Берёзовка</option>';
+            NAME_RU_options_str  += '<option value="Болотное">Болотное</option>';
+            NAME_RU_options_str  += '<option value="Большая Чёрная">Большая Чёрная</option>';
+            NAME_RU_options_str  += '<option value="Венгерово">Венгерово</option>';
+            NAME_RU_options_str  += '<option value="Горбуниха">Горбуниха</option>';
+            NAME_RU_options_str  += '<option value="Довольное">Довольное</option>';
+            NAME_RU_options_str  += '<option value="Долгое озеро">Долгое озеро</option>';
+            NAME_RU_options_str  += '<option value="Дражны Тайлы">Дражны Тайлы</option>';
+            NAME_RU_options_str  += '<option value="Здвинск">Здвинск</option>';
+            NAME_RU_options_str  += '<option value="Ик">Ик</option>';
+            NAME_RU_options_str  += '<option value="Икса">Икса</option>';
+            NAME_RU_options_str  += '<option value="Индерь">Индерь</option>';
+            NAME_RU_options_str  += '<option value="Иня">Иня</option>';
+            NAME_RU_options_str  += '<option value="Ирмень">Ирмень</option>';
+            NAME_RU_options_str  += '<option value="Искитим">Искитим</option>';
+            NAME_RU_options_str  += '<option value="Истанка">Истанка</option>';
+            NAME_RU_options_str  += '<option value="Кандереп">Кандереп</option>';
+            NAME_RU_options_str  += '<option value="Карасук">Карасук</option>';
+            NAME_RU_options_str  += '<option value="Каргат">Каргат</option>';
+            NAME_RU_options_str  += '<option value="Кинда">Кинда</option>';
+            NAME_RU_options_str  += '<option value="Колывань">Колывань</option>';
+            NAME_RU_options_str  += '<option value="Коченёво">Коченёво</option>';
+            NAME_RU_options_str  += '<option value="Кочки">Кочки</option>';
+            NAME_RU_options_str  += '<option value="Краснозёрское">Краснозёрское</option>';
+            NAME_RU_options_str  += '<option value="Крутиха">Крутиха</option>';
+            NAME_RU_options_str  += '<option value="Куйбышев">Куйбышев</option>';
+            NAME_RU_options_str  += '<option value="Купино">Купино</option>';
+            NAME_RU_options_str  += '<option value="Кыштовка">Кыштовка</option>';
+            NAME_RU_options_str  += '<option value="Лебяжья">Лебяжья</option>';
+            NAME_RU_options_str  += '<option value="Малая Чёрная">Малая Чёрная</option>';
+            NAME_RU_options_str  += '<option value="Малое Круглое озеро">Малое Круглое озеро</option>';
+            NAME_RU_options_str  += '<option value="Малое Лебяжье озеро">Малое Лебяжье озеро</option>';
+            NAME_RU_options_str  += '<option value="Маслянино">Маслянино</option>';
+            NAME_RU_options_str  += '<option value="Моховая">Моховая</option>';
+            NAME_RU_options_str  += '<option value="Мошково">Мошково</option>';
+            NAME_RU_options_str  += '<option value="Новосибирск">Новосибирск</option>';
+            NAME_RU_options_str  += '<option value="Новосибирское водохранилище">Новосибирское водохранилище</option>';
+            NAME_RU_options_str  += '<option value="Обь">Обь</option>';
+            NAME_RU_options_str  += '<option value="Омь">Омь</option>';
+            NAME_RU_options_str  += '<option value="Ордынское">Ордынское</option>';
+            NAME_RU_options_str  += '<option value="Пограничное озеро">Пограничное озеро</option>';
+            NAME_RU_options_str  += '<option value="Полдневое озеро">Полдневое озеро</option>';
+            NAME_RU_options_str  += '<option value="Россия">Россия</option>';
+            NAME_RU_options_str  += '<option value="Северное">Северное</option>';
+            NAME_RU_options_str  += '<option value="Скакальная">Скакальная</option>';
+            NAME_RU_options_str  += '<option value="Сладкое озеро">Сладкое озеро</option>';
+            NAME_RU_options_str  += '<option value="Суенга">Суенга</option>';
+            NAME_RU_options_str  += '<option value="Сузун">Сузун</option>';
+            NAME_RU_options_str  += '<option value="Сухое озеро">Сухое озеро</option>';
+            NAME_RU_options_str  += '<option value="Тара">Тара</option>';
+            NAME_RU_options_str  += '<option value="Татарск">Татарск</option>';
+            NAME_RU_options_str  += '<option value="Тогучин">Тогучин</option>';
+            NAME_RU_options_str  += '<option value="Убинское">Убинское</option>';
+            NAME_RU_options_str  += '<option value="Уень">Уень</option>';
+            NAME_RU_options_str  += '<option value="Усть-Тарка">Усть-Тарка</option>';
+            NAME_RU_options_str  += '<option value="Хорошее">Хорошее</option>';
+            NAME_RU_options_str  += '<option value="Чаны">Чаны</option>';
+            NAME_RU_options_str  += '<option value="Черепаново">Черепаново</option>';
+            NAME_RU_options_str  += '<option value="Чистоозёрное">Чистоозёрное</option>';
+            NAME_RU_options_str  += '<option value="Чулым">Чулым</option>';
+            NAME_RU_options_str  += '<option value="Яркуль">Яркуль</option>';
+            NAME_RU_options_str  += '<option value="оз. Хрущёвское">оз. Хрущёвское</option>';
+            NAME_RU_options_str  += '<option value="озеро Аткуль">озеро Аткуль</option>';
+            NAME_RU_options_str  += '<option value="озеро Большие Кайлы">озеро Большие Кайлы</option>';
+            NAME_RU_options_str  += '<option value="озеро Половинное">озеро Половинное</option>';
+            NAME_RU_options_str  += '<option value="озеро Сартлан">озеро Сартлан</option>';
+            NAME_RU_options_str  += '<option value="озеро Чаны">озеро Чаны</option>';
+            sel_NAME_RU.innerHTML = NAME_RU_options_str;
+            div_NAME_RU.appendChild(sel_NAME_RU);
+            var lab_NAME_RU = document.createElement('div');
+            lab_NAME_RU.innerHTML = 'NAME_RU';
+            lab_NAME_RU.className = 'filterlabel';
+            div_NAME_RU.appendChild(lab_NAME_RU);
+            var reset_NAME_RU = document.createElement('div');
+            reset_NAME_RU.innerHTML = 'clear filter';
+            reset_NAME_RU.className = 'filterlabel';
+            reset_NAME_RU.onclick = function() {
+                var options = document.getElementById("sel_NAME_RU").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_NAME_RU.appendChild(reset_NAME_RU);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_NAME = document.createElement('div');
+            div_NAME.id = "div_NAME";
+            div_NAME.className= "filterselect";
+            document.getElementById("menu").appendChild(div_NAME);
+            sel_NAME = document.createElement('select');
+            sel_NAME.multiple = true;
+            sel_NAME.size = 10;
+            sel_NAME.id = "sel_NAME";
+            var NAME_options_str = "<option value='' unselected></option>";
+            sel_NAME.onchange = function(){filterFunc()};
+            NAME_options_str  += '<option value=".река Тонтуровка">.река Тонтуровка</option>';
+            NAME_options_str  += '<option value="Агафониха">Агафониха</option>';
+            NAME_options_str  += '<option value="Алеус">Алеус</option>';
+            NAME_options_str  += '<option value="Аллак">Аллак</option>';
+            NAME_options_str  += '<option value="Амба">Амба</option>';
+            NAME_options_str  += '<option value="Ангош">Ангош</option>';
+            NAME_options_str  += '<option value="Анюшка">Анюшка</option>';
+            NAME_options_str  += '<option value="Арапиха">Арапиха</option>';
+            NAME_options_str  += '<option value="Арынцасс">Арынцасс</option>';
+            NAME_options_str  += '<option value="Атаманиха">Атаманиха</option>';
+            NAME_options_str  += '<option value="Аткуль">Аткуль</option>';
+            NAME_options_str  += '<option value="Ача">Ача</option>';
+            NAME_options_str  += '<option value="Аштак">Аштак</option>';
+            NAME_options_str  += '<option value="Бабашище">Бабашище</option>';
+            NAME_options_str  += '<option value="Баган">Баган</option>';
+            NAME_options_str  += '<option value="Баганское">Баганское</option>';
+            NAME_options_str  += '<option value="Баганёнок">Баганёнок</option>';
+            NAME_options_str  += '<option value="Байгачи">Байгачи</option>';
+            NAME_options_str  += '<option value="Бакса">Бакса</option>';
+            NAME_options_str  += '<option value="Баксон">Баксон</option>';
+            NAME_options_str  += '<option value="Балта">Балта</option>';
+            NAME_options_str  += '<option value="Барабинск">Барабинск</option>';
+            NAME_options_str  += '<option value="Барлак">Барлак</option>';
+            NAME_options_str  += '<option value="Бармаш">Бармаш</option>';
+            NAME_options_str  += '<option value="Барсучиха">Барсучиха</option>';
+            NAME_options_str  += '<option value="Барышиха">Барышиха</option>';
+            NAME_options_str  += '<option value="Безымянная">Безымянная</option>';
+            NAME_options_str  += '<option value="Белое">Белое</option>';
+            NAME_options_str  += '<option value="Бельчиха">Бельчиха</option>';
+            NAME_options_str  += '<option value="Бердь">Бердь</option>';
+            NAME_options_str  += '<option value="Бердюшиха">Бердюшиха</option>';
+            NAME_options_str  += '<option value="Березовая">Березовая</option>';
+            NAME_options_str  += '<option value="Березовка">Березовка</option>';
+            NAME_options_str  += '<option value="Берёзовка">Берёзовка</option>';
+            NAME_options_str  += '<option value="Берёзовое">Берёзовое</option>';
+            NAME_options_str  += '<option value="Берёзовые озёра">Берёзовые озёра</option>';
+            NAME_options_str  += '<option value="Бесштанка">Бесштанка</option>';
+            NAME_options_str  += '<option value="Бибеевская протока">Бибеевская протока</option>';
+            NAME_options_str  += '<option value="Бибиха">Бибиха</option>';
+            NAME_options_str  += '<option value="Бизюра">Бизюра</option>';
+            NAME_options_str  += '<option value="Благодатное">Благодатное</option>';
+            NAME_options_str  += '<option value="Бобровка">Бобровка</option>';
+            NAME_options_str  += '<option value="Бобровый пруд">Бобровый пруд</option>';
+            NAME_options_str  += '<option value="Боган">Боган</option>';
+            NAME_options_str  += '<option value="Боганское">Боганское</option>';
+            NAME_options_str  += '<option value="Богдатское (Круглое)">Богдатское (Круглое)</option>';
+            NAME_options_str  += '<option value="Бол Барлак">Бол Барлак</option>';
+            NAME_options_str  += '<option value="Болдырево озеро">Болдырево озеро</option>';
+            NAME_options_str  += '<option value="Болотное">Болотное</option>';
+            NAME_options_str  += '<option value="Болото Таскаево">Болото Таскаево</option>';
+            NAME_options_str  += '<option value="Болото Утичье">Болото Утичье</option>';
+            NAME_options_str  += '<option value="Болотце">Болотце</option>';
+            NAME_options_str  += '<option value="Большая">Большая</option>';
+            NAME_options_str  += '<option value="Большая Берёзовая">Большая Берёзовая</option>';
+            NAME_options_str  += '<option value="Большая Еловка">Большая Еловка</option>';
+            NAME_options_str  += '<option value="Большая Одинека">Большая Одинека</option>';
+            NAME_options_str  += '<option value="Большая Протока">Большая Протока</option>';
+            NAME_options_str  += '<option value="Большая Стрельна">Большая Стрельна</option>';
+            NAME_options_str  += '<option value="Большая Успесь">Большая Успесь</option>';
+            NAME_options_str  += '<option value="Большая Чёрная">Большая Чёрная</option>';
+            NAME_options_str  += '<option value="Большие Кашкалы">Большие Кашкалы</option>';
+            NAME_options_str  += '<option value="Большие Тайлы">Большие Тайлы</option>';
+            NAME_options_str  += '<option value="Большие Тороки">Большие Тороки</option>';
+            NAME_options_str  += '<option value="Большое Горькое">Большое Горькое</option>';
+            NAME_options_str  += '<option value="Большое Камышное">Большое Камышное</option>';
+            NAME_options_str  += '<option value="Большое Соленое">Большое Соленое</option>';
+            NAME_options_str  += '<option value="Большой Барлак">Большой Барлак</option>';
+            NAME_options_str  += '<option value="Большой Елбаш">Большой Елбаш</option>';
+            NAME_options_str  += '<option value="Большой Коён">Большой Коён</option>';
+            NAME_options_str  += '<option value="Боровая">Боровая</option>';
+            NAME_options_str  += '<option value="Боровлянка">Боровлянка</option>';
+            NAME_options_str  += '<option value="Бречеевский">Бречеевский</option>';
+            NAME_options_str  += '<option value="Буготак">Буготак</option>';
+            NAME_options_str  += '<option value="Будайка">Будайка</option>';
+            NAME_options_str  += '<option value="Бурла">Бурла</option>';
+            NAME_options_str  += '<option value="Бухаровы озёра">Бухаровы озёра</option>';
+            NAME_options_str  += '<option value="Бывший заливчик">Бывший заливчик</option>';
+            NAME_options_str  += '<option value="Быковское водохранилище">Быковское водохранилище</option>';
+            NAME_options_str  += '<option value="Быструха">Быструха</option>';
+            NAME_options_str  += '<option value="Венгерово">Венгерово</option>';
+            NAME_options_str  += '<option value="Верх-Тула">Верх-Тула</option>';
+            NAME_options_str  += '<option value="Верхний Елбак">Верхний Елбак</option>';
+            NAME_options_str  += '<option value="Верхний Каракан">Верхний Каракан</option>';
+            NAME_options_str  += '<option value="Верхний Сузун">Верхний Сузун</option>';
+            NAME_options_str  += '<option value="Верхняя Иня">Верхняя Иня</option>';
+            NAME_options_str  += '<option value="Верхняя Тула">Верхняя Тула</option>';
+            NAME_options_str  += '<option value="Виланное">Виланное</option>';
+            NAME_options_str  += '<option value="Витёковский">Витёковский</option>';
+            NAME_options_str  += '<option value="Власиха">Власиха</option>';
+            NAME_options_str  += '<option value="Водопойное">Водопойное</option>';
+            NAME_options_str  += '<option value="Воловье">Воловье</option>';
+            NAME_options_str  += '<option value="Волчиха">Волчиха</option>';
+            NAME_options_str  += '<option value="Выдриха">Выдриха</option>';
+            NAME_options_str  += '<option value="Вьюна">Вьюна</option>';
+            NAME_options_str  += '<option value="Вятка">Вятка</option>';
+            NAME_options_str  += '<option value="Глубокие озёра">Глубокие озёра</option>';
+            NAME_options_str  += '<option value="Глубокое">Глубокое</option>';
+            NAME_options_str  += '<option value="Глубокое озеро">Глубокое озеро</option>';
+            NAME_options_str  += '<option value="Голая">Голая</option>';
+            NAME_options_str  += '<option value="Головниха">Головниха</option>';
+            NAME_options_str  += '<option value="Голое">Голое</option>';
+            NAME_options_str  += '<option value="Горбуниха">Горбуниха</option>';
+            NAME_options_str  += '<option value="Горькое">Горькое</option>';
+            NAME_options_str  += '<option value="Горькое озеро">Горькое озеро</option>';
+            NAME_options_str  += '<option value="Грязнуха">Грязнуха</option>';
+            NAME_options_str  += '<option value="Гуляйка">Гуляйка</option>';
+            NAME_options_str  += '<option value="Гусиное">Гусиное</option>';
+            NAME_options_str  += '<option value="Деминский">Деминский</option>';
+            NAME_options_str  += '<option value="Деревенское озеро">Деревенское озеро</option>';
+            NAME_options_str  += '<option value="Довольное">Довольное</option>';
+            NAME_options_str  += '<option value="Дол">Дол</option>';
+            NAME_options_str  += '<option value="Долговушка 1-я">Долговушка 1-я</option>';
+            NAME_options_str  += '<option value="Долговушка 2-я">Долговушка 2-я</option>';
+            NAME_options_str  += '<option value="Долгое">Долгое</option>';
+            NAME_options_str  += '<option value="Долгое (Кривое)">Долгое (Кривое)</option>';
+            NAME_options_str  += '<option value="Долгое озеро">Долгое озеро</option>';
+            NAME_options_str  += '<option value="Дражны Тайлы">Дражны Тайлы</option>';
+            NAME_options_str  += '<option value="Дресвянка">Дресвянка</option>';
+            NAME_options_str  += '<option value="Евдашкино">Евдашкино</option>';
+            NAME_options_str  += '<option value="Еланка">Еланка</option>';
+            NAME_options_str  += '<option value="Елбак">Елбак</option>';
+            NAME_options_str  += '<option value="Елбань">Елбань</option>';
+            NAME_options_str  += '<option value="Елбаш">Елбаш</option>';
+            NAME_options_str  += '<option value="Еловка">Еловка</option>';
+            NAME_options_str  += '<option value="Ельцовка">Ельцовка</option>';
+            NAME_options_str  += '<option value="Жемчужина Сибири">Жемчужина Сибири</option>';
+            NAME_options_str  += '<option value="Живописный пруд на реке Барсучиха">Живописный пруд на реке Барсучиха</option>';
+            NAME_options_str  += '<option value="Живчик">Живчик</option>';
+            NAME_options_str  += '<option value="Журавлинка">Журавлинка</option>';
+            NAME_options_str  += '<option value="Забобуриха">Забобуриха</option>';
+            NAME_options_str  += '<option value="Заимское озеро">Заимское озеро</option>';
+            NAME_options_str  += '<option value="Займище">Займище</option>';
+            NAME_options_str  += '<option value="Зайчиха">Зайчиха</option>';
+            NAME_options_str  += '<option value="Залив Орда">Залив Орда</option>';
+            NAME_options_str  += '<option value="Замарайка">Замарайка</option>';
+            NAME_options_str  += '<option value="Замахаевские озёра">Замахаевские озёра</option>';
+            NAME_options_str  += '<option value="Здвинск">Здвинск</option>';
+            NAME_options_str  += '<option value="Зелёная">Зелёная</option>';
+            NAME_options_str  += '<option value="Зимняк">Зимняк</option>';
+            NAME_options_str  += '<option value="Золоотвал №2 ТЭЦ №5">Золоотвал №2 ТЭЦ №5</option>';
+            NAME_options_str  += '<option value="Золотуха">Золотуха</option>';
+            NAME_options_str  += '<option value="Зункуй">Зункуй</option>';
+            NAME_options_str  += '<option value="Зырянка">Зырянка</option>';
+            NAME_options_str  += '<option value="Иваново озеро">Иваново озеро</option>';
+            NAME_options_str  += '<option value="Издревая">Издревая</option>';
+            NAME_options_str  += '<option value="Изесс">Изесс</option>';
+            NAME_options_str  += '<option value="Изилы">Изилы</option>';
+            NAME_options_str  += '<option value="Изрева">Изрева</option>';
+            NAME_options_str  += '<option value="Изылы">Изылы</option>';
+            NAME_options_str  += '<option value="Изырак">Изырак</option>';
+            NAME_options_str  += '<option value="Ик">Ик</option>';
+            NAME_options_str  += '<option value="Икса">Икса</option>';
+            NAME_options_str  += '<option value="Ингула">Ингула</option>';
+            NAME_options_str  += '<option value="Ингулинская протока">Ингулинская протока</option>';
+            NAME_options_str  += '<option value="Индерь">Индерь</option>';
+            NAME_options_str  += '<option value="Иня">Иня</option>';
+            NAME_options_str  += '<option value="Ирмень">Ирмень</option>';
+            NAME_options_str  += '<option value="Искитим">Искитим</option>';
+            NAME_options_str  += '<option value="Истанка">Истанка</option>';
+            NAME_options_str  += '<option value="Истошное">Истошное</option>';
+            NAME_options_str  += '<option value="Ича">Ича</option>';
+            NAME_options_str  += '<option value="Ичек">Ичек</option>';
+            NAME_options_str  += '<option value="Кадниха">Кадниха</option>';
+            NAME_options_str  += '<option value="Казатово">Казатово</option>';
+            NAME_options_str  += '<option value="Казык">Казык</option>';
+            NAME_options_str  += '<option value="Каинка">Каинка</option>';
+            NAME_options_str  += '<option value="Кайгач">Кайгач</option>';
+            NAME_options_str  += '<option value="Кайлы">Кайлы</option>';
+            NAME_options_str  += '<option value="Кама">Кама</option>';
+            NAME_options_str  += '<option value="Каменка">Каменка</option>';
+            NAME_options_str  += '<option value="Каменка 1я">Каменка 1я</option>';
+            NAME_options_str  += '<option value="Каменушка">Каменушка</option>';
+            NAME_options_str  += '<option value="Камышевка">Камышевка</option>';
+            NAME_options_str  += '<option value="Камышенка">Камышенка</option>';
+            NAME_options_str  += '<option value="Камышинка">Камышинка</option>';
+            NAME_options_str  += '<option value="Камышное озеро">Камышное озеро</option>';
+            NAME_options_str  += '<option value="Камышовое">Камышовое</option>';
+            NAME_options_str  += '<option value="Канавы">Канавы</option>';
+            NAME_options_str  += '<option value="Канарбуга">Канарбуга</option>';
+            NAME_options_str  += '<option value="Кандереп">Кандереп</option>';
+            NAME_options_str  += '<option value="Канкуль">Канкуль</option>';
+            NAME_options_str  += '<option value="Каракан">Каракан</option>';
+            NAME_options_str  += '<option value="Карапуз">Карапуз</option>';
+            NAME_options_str  += '<option value="Карасук">Карасук</option>';
+            NAME_options_str  += '<option value="Карасье">Карасье</option>';
+            NAME_options_str  += '<option value="Караус">Караус</option>';
+            NAME_options_str  += '<option value="Карбалык">Карбалык</option>';
+            NAME_options_str  += '<option value="Карганок">Карганок</option>';
+            NAME_options_str  += '<option value="Каргат">Каргат</option>';
+            NAME_options_str  += '<option value="Каргатёнок">Каргатёнок</option>';
+            NAME_options_str  += '<option value="Карпысак">Карпысак</option>';
+            NAME_options_str  += '<option value="Карьер">Карьер</option>';
+            NAME_options_str  += '<option value="Карьер "Горский"">Карьер "Горский"</option>';
+            NAME_options_str  += '<option value="Кашлам">Кашлам</option>';
+            NAME_options_str  += '<option value="Киик">Киик</option>';
+            NAME_options_str  += '<option value="Кинда">Кинда</option>';
+            NAME_options_str  += '<option value="Кинтереп">Кинтереп</option>';
+            NAME_options_str  += '<option value="Кирза">Кирза</option>';
+            NAME_options_str  += '<option value="Китерня">Китерня</option>';
+            NAME_options_str  += '<option value="Ключевая">Ключевая</option>';
+            NAME_options_str  += '<option value="Козыки">Козыки</option>';
+            NAME_options_str  += '<option value="Койниха">Койниха</option>';
+            NAME_options_str  += '<option value="Колтырак">Колтырак</option>';
+            NAME_options_str  += '<option value="Колхозное">Колхозное</option>';
+            NAME_options_str  += '<option value="Колывань">Колывань</option>';
+            NAME_options_str  += '<option value="Кондусла">Кондусла</option>';
+            NAME_options_str  += '<option value="Коновалово">Коновалово</option>';
+            NAME_options_str  += '<option value="Кончураиха">Кончураиха</option>';
+            NAME_options_str  += '<option value="Коровиха">Коровиха</option>';
+            NAME_options_str  += '<option value="Костыль">Костыль</option>';
+            NAME_options_str  += '<option value="Котлован Мамонтовский">Котлован Мамонтовский</option>';
+            NAME_options_str  += '<option value="Коурак">Коурак</option>';
+            NAME_options_str  += '<option value="Коченёво">Коченёво</option>';
+            NAME_options_str  += '<option value="Кочки">Кочки</option>';
+            NAME_options_str  += '<option value="Коён">Коён</option>';
+            NAME_options_str  += '<option value="Краснозёрское">Краснозёрское</option>';
+            NAME_options_str  += '<option value="Кривая">Кривая</option>';
+            NAME_options_str  += '<option value="Криводановка">Криводановка</option>';
+            NAME_options_str  += '<option value="Кривое">Кривое</option>';
+            NAME_options_str  += '<option value="Кривое озеро">Кривое озеро</option>';
+            NAME_options_str  += '<option value="Кривошеевы озёра">Кривошеевы озёра</option>';
+            NAME_options_str  += '<option value="Кротово">Кротово</option>';
+            NAME_options_str  += '<option value="Кротовы озёра">Кротовы озёра</option>';
+            NAME_options_str  += '<option value="Крохалевка">Крохалевка</option>';
+            NAME_options_str  += '<option value="Кругленькое озеро">Кругленькое озеро</option>';
+            NAME_options_str  += '<option value="Круглое">Круглое</option>';
+            NAME_options_str  += '<option value="Крутая">Крутая</option>';
+            NAME_options_str  += '<option value="Крутеиха">Крутеиха</option>';
+            NAME_options_str  += '<option value="Крутиха">Крутиха</option>';
+            NAME_options_str  += '<option value="Крутишка">Крутишка</option>';
+            NAME_options_str  += '<option value="Круть-Балта">Круть-Балта</option>';
+            NAME_options_str  += '<option value="Крючное">Крючное</option>';
+            NAME_options_str  += '<option value="Куделя">Куделя</option>';
+            NAME_options_str  += '<option value="Куетра">Куетра</option>';
+            NAME_options_str  += '<option value="Кузнецовская протока">Кузнецовская протока</option>';
+            NAME_options_str  += '<option value="Кузукла">Кузукла</option>';
+            NAME_options_str  += '<option value="Куйбышев">Куйбышев</option>';
+            NAME_options_str  += '<option value="Кулас">Кулас</option>';
+            NAME_options_str  += '<option value="Кулындинское">Кулындинское</option>';
+            NAME_options_str  += '<option value="Купино">Купино</option>';
+            NAME_options_str  += '<option value="Курундус">Курундус</option>';
+            NAME_options_str  += '<option value="Курья">Курья</option>';
+            NAME_options_str  += '<option value="Кусган">Кусган</option>';
+            NAME_options_str  += '<option value="Кыргынчиха">Кыргынчиха</option>';
+            NAME_options_str  += '<option value="Кыштовка">Кыштовка</option>';
+            NAME_options_str  += '<option value="Кыштово">Кыштово</option>';
+            NAME_options_str  += '<option value="Лариониха">Лариониха</option>';
+            NAME_options_str  += '<option value="Лебединое озеро">Лебединое озеро</option>';
+            NAME_options_str  += '<option value="Лебяжка">Лебяжка</option>';
+            NAME_options_str  += '<option value="Лебяжья">Лебяжья</option>';
+            NAME_options_str  += '<option value="Левая Терь">Левая Терь</option>';
+            NAME_options_str  += '<option value="Леньково">Леньково</option>';
+            NAME_options_str  += '<option value="Лесное озеро">Лесное озеро</option>';
+            NAME_options_str  += '<option value="Лечебное озеро">Лечебное озеро</option>';
+            NAME_options_str  += '<option value="Линева">Линева</option>';
+            NAME_options_str  += '<option value="Линево">Линево</option>';
+            NAME_options_str  += '<option value="Линёво">Линёво</option>';
+            NAME_options_str  += '<option value="Листвянка">Листвянка</option>';
+            NAME_options_str  += '<option value="Лопушное озеро">Лопушное озеро</option>';
+            NAME_options_str  += '<option value="Лохматое озеро">Лохматое озеро</option>';
+            NAME_options_str  += '<option value="Луговая протока">Луговая протока</option>';
+            NAME_options_str  += '<option value="Лукова">Лукова</option>';
+            NAME_options_str  += '<option value="Луковка">Луковка</option>';
+            NAME_options_str  += '<option value="Майдан">Майдан</option>';
+            NAME_options_str  += '<option value="Майзас">Майзас</option>';
+            NAME_options_str  += '<option value="Макарово">Макарово</option>';
+            NAME_options_str  += '<option value="Мал. Чингис">Мал. Чингис</option>';
+            NAME_options_str  += '<option value="Малая">Малая</option>';
+            NAME_options_str  += '<option value="Малая Бизюра">Малая Бизюра</option>';
+            NAME_options_str  += '<option value="Малая Еловка">Малая Еловка</option>';
+            NAME_options_str  += '<option value="Малая Крохалевка">Малая Крохалевка</option>';
+            NAME_options_str  += '<option value="Малая Одинека">Малая Одинека</option>';
+            NAME_options_str  += '<option value="Малая Сума">Малая Сума</option>';
+            NAME_options_str  += '<option value="Малая Тальменка">Малая Тальменка</option>';
+            NAME_options_str  += '<option value="Малая Чёрная">Малая Чёрная</option>';
+            NAME_options_str  += '<option value="Мало-суминка">Мало-суминка</option>';
+            NAME_options_str  += '<option value="Малое Круглое озеро">Малое Круглое озеро</option>';
+            NAME_options_str  += '<option value="Малое Лебяжье озеро">Малое Лебяжье озеро</option>';
+            NAME_options_str  += '<option value="Малое Минзелинске озеро">Малое Минзелинске озеро</option>';
+            NAME_options_str  += '<option value="Малое Соленое">Малое Соленое</option>';
+            NAME_options_str  += '<option value="Малое Чёрное">Малое Чёрное</option>';
+            NAME_options_str  += '<option value="Малые Изылы">Малые Изылы</option>';
+            NAME_options_str  += '<option value="Малые Кашкалы">Малые Кашкалы</option>';
+            NAME_options_str  += '<option value="Малые Тороки">Малые Тороки</option>';
+            NAME_options_str  += '<option value="Малые Чаны">Малые Чаны</option>';
+            NAME_options_str  += '<option value="Малый Барлак">Малый Барлак</option>';
+            NAME_options_str  += '<option value="Малый Ик">Малый Ик</option>';
+            NAME_options_str  += '<option value="Малый Коен">Малый Коен</option>';
+            NAME_options_str  += '<option value="Малый Чингис">Малый Чингис</option>';
+            NAME_options_str  += '<option value="Мальчиха">Мальчиха</option>';
+            NAME_options_str  += '<option value="Маматын">Маматын</option>';
+            NAME_options_str  += '<option value="Марахта">Марахта</option>';
+            NAME_options_str  += '<option value="Маришка">Маришка</option>';
+            NAME_options_str  += '<option value="Маслянино">Маслянино</option>';
+            NAME_options_str  += '<option value="Матвеевка">Матвеевка</option>';
+            NAME_options_str  += '<option value="Матожиха">Матожиха</option>';
+            NAME_options_str  += '<option value="Матренка">Матренка</option>';
+            NAME_options_str  += '<option value="Матюжиха">Матюжиха</option>';
+            NAME_options_str  += '<option value="Махалиха">Махалиха</option>';
+            NAME_options_str  += '<option value="Медвежье">Медвежье</option>';
+            NAME_options_str  += '<option value="Меретка">Меретка</option>';
+            NAME_options_str  += '<option value="Мильтюш">Мильтюш</option>';
+            NAME_options_str  += '<option value="Минзелинское озеро">Минзелинское озеро</option>';
+            NAME_options_str  += '<option value="Мирское">Мирское</option>';
+            NAME_options_str  += '<option value="Мишукино Озеро">Мишукино Озеро</option>';
+            NAME_options_str  += '<option value="Морковка">Морковка</option>';
+            NAME_options_str  += '<option value="Мосиха">Мосиха</option>';
+            NAME_options_str  += '<option value="Мостовка">Мостовка</option>';
+            NAME_options_str  += '<option value="Моховая">Моховая</option>';
+            NAME_options_str  += '<option value="Моховка">Моховка</option>';
+            NAME_options_str  += '<option value="Мочег">Мочег</option>';
+            NAME_options_str  += '<option value="Мочище">Мочище</option>';
+            NAME_options_str  += '<option value="Мошково">Мошково</option>';
+            NAME_options_str  += '<option value="Мыс">Мыс</option>';
+            NAME_options_str  += '<option value="Наш">Наш</option>';
+            NAME_options_str  += '<option value="Нижний Каракан">Нижний Каракан</option>';
+            NAME_options_str  += '<option value="Новое озеро">Новое озеро</option>';
+            NAME_options_str  += '<option value="Новосибирск">Новосибирск</option>';
+            NAME_options_str  += '<option value="Новосибирское водохранилище">Новосибирское водохранилище</option>';
+            NAME_options_str  += '<option value="Новочёрновское озеро">Новочёрновское озеро</option>';
+            NAME_options_str  += '<option value="Ноздриха">Ноздриха</option>';
+            NAME_options_str  += '<option value="Обь">Обь</option>';
+            NAME_options_str  += '<option value="Озер Ирошкино">Озер Ирошкино</option>';
+            NAME_options_str  += '<option value="Озера Тахтамыр">Озера Тахтамыр</option>';
+            NAME_options_str  += '<option value="Озеро - дамба">Озеро - дамба</option>';
+            NAME_options_str  += '<option value="Озеро Абак">Озеро Абак</option>';
+            NAME_options_str  += '<option value="Озеро Абрамово">Озеро Абрамово</option>';
+            NAME_options_str  += '<option value="Озеро Аверино">Озеро Аверино</option>';
+            NAME_options_str  += '<option value="Озеро Алешино">Озеро Алешино</option>';
+            NAME_options_str  += '<option value="Озеро Андреянова">Озеро Андреянова</option>';
+            NAME_options_str  += '<option value="Озеро Артёмово">Озеро Артёмово</option>';
+            NAME_options_str  += '<option value="Озеро Богуслы">Озеро Богуслы</option>';
+            NAME_options_str  += '<option value="Озеро Большая Кошкаба">Озеро Большая Кошкаба</option>';
+            NAME_options_str  += '<option value="Озеро Большая Красуля">Озеро Большая Красуля</option>';
+            NAME_options_str  += '<option value="Озеро Большая Ложка">Озеро Большая Ложка</option>';
+            NAME_options_str  += '<option value="Озеро Большая Мартукла">Озеро Большая Мартукла</option>';
+            NAME_options_str  += '<option value="Озеро Большие Бокланды">Озеро Большие Бокланды</option>';
+            NAME_options_str  += '<option value="Озеро Большой Агучак">Озеро Большой Агучак</option>';
+            NAME_options_str  += '<option value="Озеро Большой Бурлан">Озеро Большой Бурлан</option>';
+            NAME_options_str  += '<option value="Озеро Большой Кошкуль">Озеро Большой Кошкуль</option>';
+            NAME_options_str  += '<option value="Озеро Большой Сибиркуль">Озеро Большой Сибиркуль</option>';
+            NAME_options_str  += '<option value="Озеро Большой Чуланкуль">Озеро Большой Чуланкуль</option>';
+            NAME_options_str  += '<option value="Озеро Гаврилово">Озеро Гаврилово</option>';
+            NAME_options_str  += '<option value="Озеро Глубокий Симезкуль">Озеро Глубокий Симезкуль</option>';
+            NAME_options_str  += '<option value="Озеро Горькое">Озеро Горькое</option>';
+            NAME_options_str  += '<option value="Озеро Горюшкино">Озеро Горюшкино</option>';
+            NAME_options_str  += '<option value="Озеро Государево">Озеро Государево</option>';
+            NAME_options_str  += '<option value="Озеро Данилово">Озеро Данилово</option>';
+            NAME_options_str  += '<option value="Озеро Домашнее">Озеро Домашнее</option>';
+            NAME_options_str  += '<option value="Озеро Дурново">Озеро Дурново</option>';
+            NAME_options_str  += '<option value="Озеро Евсеево">Озеро Евсеево</option>';
+            NAME_options_str  += '<option value="Озеро Жилое">Озеро Жилое</option>';
+            NAME_options_str  += '<option value="Озеро Жилое (Сок-Суль)">Озеро Жилое (Сок-Суль)</option>';
+            NAME_options_str  += '<option value="Озеро Заднее">Озеро Заднее</option>';
+            NAME_options_str  += '<option value="Озеро Земляное">Озеро Земляное</option>';
+            NAME_options_str  += '<option value="Озеро Ильбуган">Озеро Ильбуган</option>';
+            NAME_options_str  += '<option value="Озеро Иняк">Озеро Иняк</option>';
+            NAME_options_str  += '<option value="Озеро Каинка">Озеро Каинка</option>';
+            NAME_options_str  += '<option value="Озеро Кайлы">Озеро Кайлы</option>';
+            NAME_options_str  += '<option value="Озеро Какуль">Озеро Какуль</option>';
+            NAME_options_str  += '<option value="Озеро Камышево">Озеро Камышево</option>';
+            NAME_options_str  += '<option value="Озеро Камышенское">Озеро Камышенское</option>';
+            NAME_options_str  += '<option value="Озеро Камышное">Озеро Камышное</option>';
+            NAME_options_str  += '<option value="Озеро Качкульня">Озеро Качкульня</option>';
+            NAME_options_str  += '<option value="Озеро Кашино">Озеро Кашино</option>';
+            NAME_options_str  += '<option value="Озеро Кислы">Озеро Кислы</option>';
+            NAME_options_str  += '<option value="Озеро Кишкуль">Озеро Кишкуль</option>';
+            NAME_options_str  += '<option value="Озеро Кладбище">Озеро Кладбище</option>';
+            NAME_options_str  += '<option value="Озеро Коляпино (Щучье)">Озеро Коляпино (Щучье)</option>';
+            NAME_options_str  += '<option value="Озеро Конево">Озеро Конево</option>';
+            NAME_options_str  += '<option value="Озеро Конопляник">Озеро Конопляник</option>';
+            NAME_options_str  += '<option value="Озеро Коровино">Озеро Коровино</option>';
+            NAME_options_str  += '<option value="Озеро Кошкаба">Озеро Кошкаба</option>';
+            NAME_options_str  += '<option value="Озеро Кривое">Озеро Кривое</option>';
+            NAME_options_str  += '<option value="Озеро Куликово">Озеро Куликово</option>';
+            NAME_options_str  += '<option value="Озеро Кундар">Озеро Кундар</option>';
+            NAME_options_str  += '<option value="Озеро Кунлы">Озеро Кунлы</option>';
+            NAME_options_str  += '<option value="Озеро Кушаговское">Озеро Кушаговское</option>';
+            NAME_options_str  += '<option value="Озеро Кяйла">Озеро Кяйла</option>';
+            NAME_options_str  += '<option value="Озеро Ливенцево">Озеро Ливенцево</option>';
+            NAME_options_str  += '<option value="Озеро Магназерское">Озеро Магназерское</option>';
+            NAME_options_str  += '<option value="Озеро Малая Кошкаба">Озеро Малая Кошкаба</option>';
+            NAME_options_str  += '<option value="Озеро Малая Красуля">Озеро Малая Красуля</option>';
+            NAME_options_str  += '<option value="Озеро Малое Пучково">Озеро Малое Пучково</option>';
+            NAME_options_str  += '<option value="Озеро Малый Агучак">Озеро Малый Агучак</option>';
+            NAME_options_str  += '<option value="Озеро Малый Бурлан">Озеро Малый Бурлан</option>';
+            NAME_options_str  += '<option value="Озеро Малый Чуланкуль">Озеро Малый Чуланкуль</option>';
+            NAME_options_str  += '<option value="Озеро Мартыново">Озеро Мартыново</option>';
+            NAME_options_str  += '<option value="Озеро Медведкино">Озеро Медведкино</option>';
+            NAME_options_str  += '<option value="Озеро Мелкий Зимезкуль">Озеро Мелкий Зимезкуль</option>';
+            NAME_options_str  += '<option value="Озеро Могильное">Озеро Могильное</option>';
+            NAME_options_str  += '<option value="Озеро Мостовое">Озеро Мостовое</option>';
+            NAME_options_str  += '<option value="Озеро Мурмашино">Озеро Мурмашино</option>';
+            NAME_options_str  += '<option value="Озеро Муртук">Озеро Муртук</option>';
+            NAME_options_str  += '<option value="Озеро Надежда">Озеро Надежда</option>';
+            NAME_options_str  += '<option value="Озеро Обочим">Озеро Обочим</option>';
+            NAME_options_str  += '<option value="Озеро Орешкино">Озеро Орешкино</option>';
+            NAME_options_str  += '<option value="Озеро Островское">Озеро Островское</option>';
+            NAME_options_str  += '<option value="Озеро Переднее">Озеро Переднее</option>';
+            NAME_options_str  += '<option value="Озеро Пигуль">Озеро Пигуль</option>';
+            NAME_options_str  += '<option value="Озеро Пимичево">Озеро Пимичево</option>';
+            NAME_options_str  += '<option value="Озеро Подгорное">Озеро Подгорное</option>';
+            NAME_options_str  += '<option value="Озеро Поляково">Озеро Поляково</option>';
+            NAME_options_str  += '<option value="Озеро Пучково">Озеро Пучково</option>';
+            NAME_options_str  += '<option value="Озеро Раздольное">Озеро Раздольное</option>';
+            NAME_options_str  += '<option value="Озеро Рожково">Озеро Рожково</option>';
+            NAME_options_str  += '<option value="Озеро Рямовое">Озеро Рямовое</option>';
+            NAME_options_str  += '<option value="Озеро Сарбалык">Озеро Сарбалык</option>';
+            NAME_options_str  += '<option value="Озеро Светлое">Озеро Светлое</option>';
+            NAME_options_str  += '<option value="Озеро Силиш">Озеро Силиш</option>';
+            NAME_options_str  += '<option value="Озеро Сладкое">Озеро Сладкое</option>';
+            NAME_options_str  += '<option value="Озеро Собачье">Озеро Собачье</option>';
+            NAME_options_str  += '<option value="Озеро Солнечное">Озеро Солнечное</option>';
+            NAME_options_str  += '<option value="Озеро Сороково">Озеро Сороково</option>';
+            NAME_options_str  += '<option value="Озеро Средний Чуланкуль">Озеро Средний Чуланкуль</option>';
+            NAME_options_str  += '<option value="Озеро Старожильское">Озеро Старожильское</option>';
+            NAME_options_str  += '<option value="Озеро Сёмкино">Озеро Сёмкино</option>';
+            NAME_options_str  += '<option value="Озеро Теренгуль">Озеро Теренгуль</option>';
+            NAME_options_str  += '<option value="Озеро Тулинское">Озеро Тулинское</option>';
+            NAME_options_str  += '<option value="Озеро Угуй">Озеро Угуй</option>';
+            NAME_options_str  += '<option value="Озеро Федино">Озеро Федино</option>';
+            NAME_options_str  += '<option value="Озеро Филиппово">Озеро Филиппово</option>';
+            NAME_options_str  += '<option value="Озеро Хохлово">Озеро Хохлово</option>';
+            NAME_options_str  += '<option value="Озеро Цыбово">Озеро Цыбово</option>';
+            NAME_options_str  += '<option value="Озеро Чистое">Озеро Чистое</option>';
+            NAME_options_str  += '<option value="Озеро Чичкагуль">Озеро Чичкагуль</option>';
+            NAME_options_str  += '<option value="Озеро Чичкан">Озеро Чичкан</option>';
+            NAME_options_str  += '<option value="Озеро Чубсай">Озеро Чубсай</option>';
+            NAME_options_str  += '<option value="Озеро Шухово">Озеро Шухово</option>';
+            NAME_options_str  += '<option value="Озеро Щучье">Озеро Щучье</option>';
+            NAME_options_str  += '<option value="Озеро Яноба">Озеро Яноба</option>';
+            NAME_options_str  += '<option value="Озеро Яркуль">Озеро Яркуль</option>';
+            NAME_options_str  += '<option value="Озеро малая Ложка">Озеро малая Ложка</option>';
+            NAME_options_str  += '<option value="Окунёвка">Окунёвка</option>';
+            NAME_options_str  += '<option value="Омелина">Омелина</option>';
+            NAME_options_str  += '<option value="Омь">Омь</option>';
+            NAME_options_str  += '<option value="Опалиха">Опалиха</option>';
+            NAME_options_str  += '<option value="Ора">Ора</option>';
+            NAME_options_str  += '<option value="Орда">Орда</option>';
+            NAME_options_str  += '<option value="Ордынское">Ордынское</option>';
+            NAME_options_str  += '<option value="Орехово-Логовский пруд">Орехово-Логовский пруд</option>';
+            NAME_options_str  += '<option value="Орлово">Орлово</option>';
+            NAME_options_str  += '<option value="Орёл">Орёл</option>';
+            NAME_options_str  += '<option value="Осиновка">Осиновка</option>';
+            NAME_options_str  += '<option value="Отгонка">Отгонка</option>';
+            NAME_options_str  += '<option value="Отоково">Отоково</option>';
+            NAME_options_str  += '<option value="Ояш">Ояш</option>';
+            NAME_options_str  += '<option value="Оёш">Оёш</option>';
+            NAME_options_str  += '<option value="ПВ-60">ПВ-60</option>';
+            NAME_options_str  += '<option value="Павина">Павина</option>';
+            NAME_options_str  += '<option value="Пайвиха">Пайвиха</option>';
+            NAME_options_str  += '<option value="Паутовское озеро">Паутовское озеро</option>';
+            NAME_options_str  += '<option value="Пашенка">Пашенка</option>';
+            NAME_options_str  += '<option value="Переборка">Переборка</option>';
+            NAME_options_str  += '<option value="Пересыхающая река">Пересыхающая река</option>';
+            NAME_options_str  += '<option value="Песчанное">Песчанное</option>';
+            NAME_options_str  += '<option value="Песчаное">Песчаное</option>';
+            NAME_options_str  += '<option value="Песчаное озеро">Песчаное озеро</option>';
+            NAME_options_str  += '<option value="Песьяное">Песьяное</option>';
+            NAME_options_str  += '<option value="Петрушиха">Петрушиха</option>';
+            NAME_options_str  += '<option value="Петрушкино">Петрушкино</option>';
+            NAME_options_str  += '<option value="Петушиха">Петушиха</option>';
+            NAME_options_str  += '<option value="Пикуль">Пикуль</option>';
+            NAME_options_str  += '<option value="Плоское">Плоское</option>';
+            NAME_options_str  += '<option value="Пограничное озеро">Пограничное озеро</option>';
+            NAME_options_str  += '<option value="Подкова">Подкова</option>';
+            NAME_options_str  += '<option value="Покосная">Покосная</option>';
+            NAME_options_str  += '<option value="Полдневая">Полдневая</option>';
+            NAME_options_str  += '<option value="Полдневое озеро">Полдневое озеро</option>';
+            NAME_options_str  += '<option value="Полуденное">Полуденное</option>';
+            NAME_options_str  += '<option value="Полумесяц">Полумесяц</option>';
+            NAME_options_str  += '<option value="Поперечные Тайлы">Поперечные Тайлы</option>';
+            NAME_options_str  += '<option value="Порос">Порос</option>';
+            NAME_options_str  += '<option value="Постой">Постой</option>';
+            NAME_options_str  += '<option value="Правая Терь">Правая Терь</option>';
+            NAME_options_str  += '<option value="Пригородный пруд">Пригородный пруд</option>';
+            NAME_options_str  += '<option value="Проскокушка">Проскокушка</option>';
+            NAME_options_str  += '<option value="Протока">Протока</option>';
+            NAME_options_str  += '<option value="Протока малая">Протока малая</option>';
+            NAME_options_str  += '<option value="Пруд Берёзовый">Пруд Берёзовый</option>';
+            NAME_options_str  += '<option value="Пруд им. Б.Н. Ельцина">Пруд им. Б.Н. Ельцина</option>';
+            NAME_options_str  += '<option value="Пустынка">Пустынка</option>';
+            NAME_options_str  += '<option value="Пустышка">Пустышка</option>';
+            NAME_options_str  += '<option value="Раздельная">Раздельная</option>';
+            NAME_options_str  += '<option value="Ракитовка">Ракитовка</option>';
+            NAME_options_str  += '<option value="Ранетка">Ранетка</option>';
+            NAME_options_str  += '<option value="Река Кама">Река Кама</option>';
+            NAME_options_str  += '<option value="Ромиха">Ромиха</option>';
+            NAME_options_str  += '<option value="Россия">Россия</option>';
+            NAME_options_str  += '<option value="Рублевка">Рублевка</option>';
+            NAME_options_str  += '<option value="Рудачиха">Рудачиха</option>';
+            NAME_options_str  += '<option value="Рыжово">Рыжово</option>';
+            NAME_options_str  += '<option value="Рямовое">Рямовое</option>';
+            NAME_options_str  += '<option value="Рямское">Рямское</option>';
+            NAME_options_str  += '<option value="Саева">Саева</option>';
+            NAME_options_str  += '<option value="Санино">Санино</option>';
+            NAME_options_str  += '<option value="Сарбоян">Сарбоян</option>';
+            NAME_options_str  += '<option value="Саргуль">Саргуль</option>';
+            NAME_options_str  += '<option value="Светлое">Светлое</option>';
+            NAME_options_str  += '<option value="Северное">Северное</option>';
+            NAME_options_str  += '<option value="Северное озеро">Северное озеро</option>';
+            NAME_options_str  += '<option value="Северный Мочег">Северный Мочег</option>';
+            NAME_options_str  += '<option value="Сектинское">Сектинское</option>';
+            NAME_options_str  += '<option value="Сенькино озеро">Сенькино озеро</option>';
+            NAME_options_str  += '<option value="Серебряное">Серебряное</option>';
+            NAME_options_str  += '<option value="Серебряное озеро">Серебряное озеро</option>';
+            NAME_options_str  += '<option value="Ситовка">Ситовка</option>';
+            NAME_options_str  += '<option value="Скакальная">Скакальная</option>';
+            NAME_options_str  += '<option value="Скакунка">Скакунка</option>';
+            NAME_options_str  += '<option value="Скальная">Скальная</option>';
+            NAME_options_str  += '<option value="Сладкое">Сладкое</option>';
+            NAME_options_str  += '<option value="Сладкое озеро">Сладкое озеро</option>';
+            NAME_options_str  += '<option value="Слезянка">Слезянка</option>';
+            NAME_options_str  += '<option value="Слив "Запретки"">Слив "Запретки"</option>';
+            NAME_options_str  += '<option value="Солдатское озеро">Солдатское озеро</option>';
+            NAME_options_str  += '<option value="Соловьёвское">Соловьёвское</option>';
+            NAME_options_str  += '<option value="Солонцы">Солонцы</option>';
+            NAME_options_str  += '<option value="Солёное">Солёное</option>';
+            NAME_options_str  += '<option value="Солёное озеро">Солёное озеро</option>';
+            NAME_options_str  += '<option value="Сороковка">Сороковка</option>';
+            NAME_options_str  += '<option value="Сосновка">Сосновка</option>';
+            NAME_options_str  += '<option value="Старикова">Старикова</option>';
+            NAME_options_str  += '<option value="Старица">Старица</option>';
+            NAME_options_str  += '<option value="Старица реки Шарап">Старица реки Шарап</option>';
+            NAME_options_str  += '<option value="Суенга">Суенга</option>';
+            NAME_options_str  += '<option value="Суенгинские водопады">Суенгинские водопады</option>';
+            NAME_options_str  += '<option value="Сузун">Сузун</option>';
+            NAME_options_str  += '<option value="Сума">Сума</option>';
+            NAME_options_str  += '<option value="Сумное">Сумное</option>';
+            NAME_options_str  += '<option value="Сурьянка">Сурьянка</option>';
+            NAME_options_str  += '<option value="Сухая">Сухая</option>';
+            NAME_options_str  += '<option value="Сухое озеро">Сухое озеро</option>';
+            NAME_options_str  += '<option value="Сушиха">Сушиха</option>';
+            NAME_options_str  += '<option value="Таволжанка">Таволжанка</option>';
+            NAME_options_str  += '<option value="Таганиха">Таганиха</option>';
+            NAME_options_str  += '<option value="Тай-Дас">Тай-Дас</option>';
+            NAME_options_str  += '<option value="Талица">Талица</option>';
+            NAME_options_str  += '<option value="Таловка">Таловка</option>';
+            NAME_options_str  += '<option value="Тальменка">Тальменка</option>';
+            NAME_options_str  += '<option value="Танаев пруд">Танаев пруд</option>';
+            NAME_options_str  += '<option value="Тара">Тара</option>';
+            NAME_options_str  += '<option value="Тарадановка">Тарадановка</option>';
+            NAME_options_str  += '<option value="Тарка">Тарка</option>';
+            NAME_options_str  += '<option value="Тарсьма">Тарсьма</option>';
+            NAME_options_str  += '<option value="Тартас">Тартас</option>';
+            NAME_options_str  += '<option value="Тартасс">Тартасс</option>';
+            NAME_options_str  += '<option value="Татарск">Татарск</option>';
+            NAME_options_str  += '<option value="Термяк">Термяк</option>';
+            NAME_options_str  += '<option value="Тигалиха">Тигалиха</option>';
+            NAME_options_str  += '<option value="Тимаково озеро">Тимаково озеро</option>';
+            NAME_options_str  += '<option value="Тимошкино озеро">Тимошкино озеро</option>';
+            NAME_options_str  += '<option value="Титово">Титово</option>';
+            NAME_options_str  += '<option value="Тогучин">Тогучин</option>';
+            NAME_options_str  += '<option value="Тогучинка">Тогучинка</option>';
+            NAME_options_str  += '<option value="Токмыш">Токмыш</option>';
+            NAME_options_str  += '<option value="Токтамышова Курья">Токтамышова Курья</option>';
+            NAME_options_str  += '<option value="Томка">Томка</option>';
+            NAME_options_str  += '<option value="Тонтуровка">Тонтуровка</option>';
+            NAME_options_str  += '<option value="Топка">Топка</option>';
+            NAME_options_str  += '<option value="Топкая">Топкая</option>';
+            NAME_options_str  += '<option value="Тоя">Тоя</option>';
+            NAME_options_str  += '<option value="Травяное">Травяное</option>';
+            NAME_options_str  += '<option value="Тройка">Тройка</option>';
+            NAME_options_str  += '<option value="Тула">Тула</option>';
+            NAME_options_str  += '<option value="Тулка">Тулка</option>';
+            NAME_options_str  += '<option value="Тючка">Тючка</option>';
+            NAME_options_str  += '<option value="Убинское">Убинское</option>';
+            NAME_options_str  += '<option value="Убинское озеро">Убинское озеро</option>';
+            NAME_options_str  += '<option value="Угуйка">Угуйка</option>';
+            NAME_options_str  += '<option value="Угурманка">Угурманка</option>';
+            NAME_options_str  += '<option value="Уень">Уень</option>';
+            NAME_options_str  += '<option value="Узакла">Узакла</option>';
+            NAME_options_str  += '<option value="Укроп">Укроп</option>';
+            NAME_options_str  += '<option value="Улыбердь">Улыбердь</option>';
+            NAME_options_str  += '<option value="Умрева">Умрева</option>';
+            NAME_options_str  += '<option value="Ургулька">Ургулька</option>';
+            NAME_options_str  += '<option value="Урез">Урез</option>';
+            NAME_options_str  += '<option value="Урманное оз.">Урманное оз.</option>';
+            NAME_options_str  += '<option value="Урочище Таи">Урочище Таи</option>';
+            NAME_options_str  += '<option value="Урюм">Урюм</option>';
+            NAME_options_str  += '<option value="Усть-Тарка">Усть-Тарка</option>';
+            NAME_options_str  += '<option value="Утиная заводь">Утиная заводь</option>';
+            NAME_options_str  += '<option value="Утиное">Утиное</option>';
+            NAME_options_str  += '<option value="Утиное озеро">Утиное озеро</option>';
+            NAME_options_str  += '<option value="Федосиха">Федосиха</option>';
+            NAME_options_str  += '<option value="Филимониха">Филимониха</option>';
+            NAME_options_str  += '<option value="Фролиха">Фролиха</option>';
+            NAME_options_str  += '<option value="Хариусовка">Хариусовка</option>';
+            NAME_options_str  += '<option value="Химзаводское озеро">Химзаводское озеро</option>';
+            NAME_options_str  += '<option value="Хмелёвка">Хмелёвка</option>';
+            NAME_options_str  += '<option value="Холодная">Холодная</option>';
+            NAME_options_str  += '<option value="Хоменково">Хоменково</option>';
+            NAME_options_str  += '<option value="Хомутина">Хомутина</option>';
+            NAME_options_str  += '<option value="Чаны">Чаны</option>';
+            NAME_options_str  += '<option value="Чаус">Чаус</option>';
+            NAME_options_str  += '<option value="Чебула">Чебула</option>';
+            NAME_options_str  += '<option value="Чем">Чем</option>';
+            NAME_options_str  += '<option value="Чемик">Чемик</option>';
+            NAME_options_str  += '<option value="Черемново">Черемново</option>';
+            NAME_options_str  += '<option value="Черемшанка">Черемшанка</option>';
+            NAME_options_str  += '<option value="Черепаново">Черепаново</option>';
+            NAME_options_str  += '<option value="Черная">Черная</option>';
+            NAME_options_str  += '<option value="Чернодыриха">Чернодыриха</option>';
+            NAME_options_str  += '<option value="Чертанда">Чертанда</option>';
+            NAME_options_str  += '<option value="Черёмуховое озеро">Черёмуховое озеро</option>';
+            NAME_options_str  += '<option value="Чесноковка">Чесноковка</option>';
+            NAME_options_str  += '<option value="Чик">Чик</option>';
+            NAME_options_str  += '<option value="Чингис">Чингис</option>';
+            NAME_options_str  += '<option value="Чируха">Чируха</option>';
+            NAME_options_str  += '<option value="Чистое озеро">Чистое озеро</option>';
+            NAME_options_str  += '<option value="Чистоозёрное">Чистоозёрное</option>';
+            NAME_options_str  += '<option value="Чудиновка">Чудиновка</option>';
+            NAME_options_str  += '<option value="Чулым">Чулым</option>';
+            NAME_options_str  += '<option value="Чуман">Чуман</option>';
+            NAME_options_str  += '<option value="Чёка">Чёка</option>';
+            NAME_options_str  += '<option value="Чёрная">Чёрная</option>';
+            NAME_options_str  += '<option value="Чёрное">Чёрное</option>';
+            NAME_options_str  += '<option value="Чёрное озеро">Чёрное озеро</option>';
+            NAME_options_str  += '<option value="Шабаниха">Шабаниха</option>';
+            NAME_options_str  += '<option value="Шагалка">Шагалка</option>';
+            NAME_options_str  += '<option value="Шадриха">Шадриха</option>';
+            NAME_options_str  += '<option value="Шайдош">Шайдош</option>';
+            NAME_options_str  += '<option value="Шарап">Шарап</option>';
+            NAME_options_str  += '<option value="Шарапка">Шарапка</option>';
+            NAME_options_str  += '<option value="Шариха">Шариха</option>';
+            NAME_options_str  += '<option value="Шебаршиха">Шебаршиха</option>';
+            NAME_options_str  += '<option value="Шелковка">Шелковка</option>';
+            NAME_options_str  += '<option value="Шемонаиха">Шемонаиха</option>';
+            NAME_options_str  += '<option value="Шепелка">Шепелка</option>';
+            NAME_options_str  += '<option value="Шипелька">Шипелька</option>';
+            NAME_options_str  += '<option value="Шипуниха">Шипуниха</option>';
+            NAME_options_str  += '<option value="Широкое">Широкое</option>';
+            NAME_options_str  += '<option value="Шумное">Шумное</option>';
+            NAME_options_str  += '<option value="Щучье">Щучье</option>';
+            NAME_options_str  += '<option value="Щучьи озёра">Щучьи озёра</option>';
+            NAME_options_str  += '<option value="Южное озеро">Южное озеро</option>';
+            NAME_options_str  += '<option value="Якбалык">Якбалык</option>';
+            NAME_options_str  += '<option value="Яринский затон">Яринский затон</option>';
+            NAME_options_str  += '<option value="Яркуль">Яркуль</option>';
+            NAME_options_str  += '<option value="бол. Опалим">бол. Опалим</option>';
+            NAME_options_str  += '<option value="бол. Плоское">бол. Плоское</option>';
+            NAME_options_str  += '<option value="вдхр">вдхр</option>';
+            NAME_options_str  += '<option value="верхотуровка">верхотуровка</option>';
+            NAME_options_str  += '<option value="дамба">дамба</option>';
+            NAME_options_str  += '<option value="дивинский пруд">дивинский пруд</option>';
+            NAME_options_str  += '<option value="иксинский пруд">иксинский пруд</option>';
+            NAME_options_str  += '<option value="красная">красная</option>';
+            NAME_options_str  += '<option value="красное озеро">красное озеро</option>';
+            NAME_options_str  += '<option value="кунчурук">кунчурук</option>';
+            NAME_options_str  += '<option value="лебедев падун">лебедев падун</option>';
+            NAME_options_str  += '<option value="лебяжка">лебяжка</option>';
+            NAME_options_str  += '<option value="лебяжья">лебяжья</option>';
+            NAME_options_str  += '<option value="мал. Чесноковка">мал. Чесноковка</option>';
+            NAME_options_str  += '<option value="моховая">моховая</option>';
+            NAME_options_str  += '<option value="о. Байдово">о. Байдово</option>';
+            NAME_options_str  += '<option value="о. Гнилое Болото">о. Гнилое Болото</option>';
+            NAME_options_str  += '<option value="о.Бол.Болман">о.Бол.Болман</option>';
+            NAME_options_str  += '<option value="о.Кол">о.Кол</option>';
+            NAME_options_str  += '<option value="о.Тенис">о.Тенис</option>';
+            NAME_options_str  += '<option value="оз. Абаково">оз. Абаково</option>';
+            NAME_options_str  += '<option value="оз. Баганское">оз. Баганское</option>';
+            NAME_options_str  += '<option value="оз. Бараново">оз. Бараново</option>';
+            NAME_options_str  += '<option value="оз. Белое">оз. Белое</option>';
+            NAME_options_str  += '<option value="оз. Божье">оз. Божье</option>';
+            NAME_options_str  += '<option value="оз. Бугрово">оз. Бугрово</option>';
+            NAME_options_str  += '<option value="оз. Букашкино">оз. Букашкино</option>';
+            NAME_options_str  += '<option value="оз. Великое">оз. Великое</option>';
+            NAME_options_str  += '<option value="оз. Верхнее плоское">оз. Верхнее плоское</option>';
+            NAME_options_str  += '<option value="оз. Гербаевское">оз. Гербаевское</option>';
+            NAME_options_str  += '<option value="оз. Глубокое">оз. Глубокое</option>';
+            NAME_options_str  += '<option value="оз. Горькое">оз. Горькое</option>';
+            NAME_options_str  += '<option value="оз. Гусиное">оз. Гусиное</option>';
+            NAME_options_str  += '<option value="оз. Долгое">оз. Долгое</option>';
+            NAME_options_str  += '<option value="оз. Зимнее">оз. Зимнее</option>';
+            NAME_options_str  += '<option value="оз. Зимник">оз. Зимник</option>';
+            NAME_options_str  += '<option value="оз. Иваново">оз. Иваново</option>';
+            NAME_options_str  += '<option value="оз. Казаткуль">оз. Казаткуль</option>';
+            NAME_options_str  += '<option value="оз. Камышное">оз. Камышное</option>';
+            NAME_options_str  += '<option value="оз. Конное">оз. Конное</option>';
+            NAME_options_str  += '<option value="оз. Кость">оз. Кость</option>';
+            NAME_options_str  += '<option value="оз. Кочковатое">оз. Кочковатое</option>';
+            NAME_options_str  += '<option value="оз. Краськово">оз. Краськово</option>';
+            NAME_options_str  += '<option value="оз. Круглое">оз. Круглое</option>';
+            NAME_options_str  += '<option value="оз. Крутенькое">оз. Крутенькое</option>';
+            NAME_options_str  += '<option value="оз. Кукушкино">оз. Кукушкино</option>';
+            NAME_options_str  += '<option value="оз. Кулёма">оз. Кулёма</option>';
+            NAME_options_str  += '<option value="оз. Кундраки">оз. Кундраки</option>';
+            NAME_options_str  += '<option value="оз. Куренастое">оз. Куренастое</option>';
+            NAME_options_str  += '<option value="оз. Ларино">оз. Ларино</option>';
+            NAME_options_str  += '<option value="оз. Лебяжье">оз. Лебяжье</option>';
+            NAME_options_str  += '<option value="оз. Линёвое">оз. Линёвое</option>';
+            NAME_options_str  += '<option value="оз. Листья">оз. Листья</option>';
+            NAME_options_str  += '<option value="оз. Луковское">оз. Луковское</option>';
+            NAME_options_str  += '<option value="оз. Малое кривое">оз. Малое кривое</option>';
+            NAME_options_str  += '<option value="оз. Медвежье">оз. Медвежье</option>';
+            NAME_options_str  += '<option value="оз. Мелкое">оз. Мелкое</option>';
+            NAME_options_str  += '<option value="оз. Микишево">оз. Микишево</option>';
+            NAME_options_str  += '<option value="оз. Мосеево">оз. Мосеево</option>';
+            NAME_options_str  += '<option value="оз. Моховое">оз. Моховое</option>';
+            NAME_options_str  += '<option value="оз. Муриково">оз. Муриково</option>';
+            NAME_options_str  += '<option value="оз. Надыр">оз. Надыр</option>';
+            NAME_options_str  += '<option value="оз. Нижнее плоское">оз. Нижнее плоское</option>';
+            NAME_options_str  += '<option value="оз. Осиновское">оз. Осиновское</option>';
+            NAME_options_str  += '<option value="оз. Пившино">оз. Пившино</option>';
+            NAME_options_str  += '<option value="оз. Половинное">оз. Половинное</option>';
+            NAME_options_str  += '<option value="оз. Пронино">оз. Пронино</option>';
+            NAME_options_str  += '<option value="оз. Ратиково">оз. Ратиково</option>';
+            NAME_options_str  += '<option value="оз. Рыбное">оз. Рыбное</option>';
+            NAME_options_str  += '<option value="оз. Рямовое">оз. Рямовое</option>';
+            NAME_options_str  += '<option value="оз. Светлое">оз. Светлое</option>';
+            NAME_options_str  += '<option value="оз. Свистуны">оз. Свистуны</option>';
+            NAME_options_str  += '<option value="оз. Сидорова">оз. Сидорова</option>';
+            NAME_options_str  += '<option value="оз. Сидоровское">оз. Сидоровское</option>';
+            NAME_options_str  += '<option value="оз. Собачье">оз. Собачье</option>';
+            NAME_options_str  += '<option value="оз. Солдатское">оз. Солдатское</option>';
+            NAME_options_str  += '<option value="оз. Соленое">оз. Соленое</option>';
+            NAME_options_str  += '<option value="оз. Соленое (г.-сол.)">оз. Соленое (г.-сол.)</option>';
+            NAME_options_str  += '<option value="оз. Солёное">оз. Солёное</option>';
+            NAME_options_str  += '<option value="оз. Стеклянное">оз. Стеклянное</option>';
+            NAME_options_str  += '<option value="оз. Студеное">оз. Студеное</option>';
+            NAME_options_str  += '<option value="оз. Толстиково">оз. Толстиково</option>';
+            NAME_options_str  += '<option value="оз. Травное">оз. Травное</option>';
+            NAME_options_str  += '<option value="оз. Фадеевское">оз. Фадеевское</option>';
+            NAME_options_str  += '<option value="оз. Хрущёвское">оз. Хрущёвское</option>';
+            NAME_options_str  += '<option value="оз. Чащевитое">оз. Чащевитое</option>';
+            NAME_options_str  += '<option value="оз. Чебачонок">оз. Чебачонок</option>';
+            NAME_options_str  += '<option value="оз. Чебачье">оз. Чебачье</option>';
+            NAME_options_str  += '<option value="оз. Челганец">оз. Челганец</option>';
+            NAME_options_str  += '<option value="оз. Чистенькое">оз. Чистенькое</option>';
+            NAME_options_str  += '<option value="оз. Чистое">оз. Чистое</option>';
+            NAME_options_str  += '<option value="оз. Чёрное">оз. Чёрное</option>';
+            NAME_options_str  += '<option value="оз. Шагалка">оз. Шагалка</option>';
+            NAME_options_str  += '<option value="оз. Щучье">оз. Щучье</option>';
+            NAME_options_str  += '<option value="оз.Аптула">оз.Аптула</option>';
+            NAME_options_str  += '<option value="оз.Атлугуль">оз.Атлугуль</option>';
+            NAME_options_str  += '<option value="оз.Большое Плоское">оз.Большое Плоское</option>';
+            NAME_options_str  += '<option value="оз.Иткуль">оз.Иткуль</option>';
+            NAME_options_str  += '<option value="оз.Кандово">оз.Кандово</option>';
+            NAME_options_str  += '<option value="оз.Каяк">оз.Каяк</option>';
+            NAME_options_str  += '<option value="оз.Каяцкое">оз.Каяцкое</option>';
+            NAME_options_str  += '<option value="оз.Кырчик">оз.Кырчик</option>';
+            NAME_options_str  += '<option value="оз.Лебяжье">оз.Лебяжье</option>';
+            NAME_options_str  += '<option value="оз.Мал.Балман">оз.Мал.Балман</option>';
+            NAME_options_str  += '<option value="оз.Малое Горькое">оз.Малое Горькое</option>';
+            NAME_options_str  += '<option value="оз.Мурино">оз.Мурино</option>';
+            NAME_options_str  += '<option value="оз.Сарбалык">оз.Сарбалык</option>';
+            NAME_options_str  += '<option value="оз.Трошино">оз.Трошино</option>';
+            NAME_options_str  += '<option value="оз.Южала">оз.Южала</option>';
+            NAME_options_str  += '<option value="озеро Абаково">озеро Абаково</option>';
+            NAME_options_str  += '<option value="озеро Алексеевское">озеро Алексеевское</option>';
+            NAME_options_str  += '<option value="озеро Анферово">озеро Анферово</option>';
+            NAME_options_str  += '<option value="озеро Астродым">озеро Астродым</option>';
+            NAME_options_str  += '<option value="озеро Аткуль">озеро Аткуль</option>';
+            NAME_options_str  += '<option value="озеро Баган">озеро Баган</option>';
+            NAME_options_str  += '<option value="озеро Байгачево">озеро Байгачево</option>';
+            NAME_options_str  += '<option value="озеро Бакланино">озеро Бакланино</option>';
+            NAME_options_str  += '<option value="озеро Баклуши">озеро Баклуши</option>';
+            NAME_options_str  += '<option value="озеро Бакшеево">озеро Бакшеево</option>';
+            NAME_options_str  += '<option value="озеро Барлакуль">озеро Барлакуль</option>';
+            NAME_options_str  += '<option value="озеро Барсучье">озеро Барсучье</option>';
+            NAME_options_str  += '<option value="озеро Барчин">озеро Барчин</option>';
+            NAME_options_str  += '<option value="озеро Батюково">озеро Батюково</option>';
+            NAME_options_str  += '<option value="озеро Бахтияр куль">озеро Бахтияр куль</option>';
+            NAME_options_str  += '<option value="озеро Баян куль">озеро Баян куль</option>';
+            NAME_options_str  += '<option value="озеро Бей-Булатово">озеро Бей-Булатово</option>';
+            NAME_options_str  += '<option value="озеро Белое Глубокое">озеро Белое Глубокое</option>';
+            NAME_options_str  += '<option value="озеро Белое Мелкое">озеро Белое Мелкое</option>';
+            NAME_options_str  += '<option value="озеро Белянино">озеро Белянино</option>';
+            NAME_options_str  += '<option value="озеро Беляниха">озеро Беляниха</option>';
+            NAME_options_str  += '<option value="озеро Бергуль">озеро Бергуль</option>';
+            NAME_options_str  += '<option value="озеро Бергульское">озеро Бергульское</option>';
+            NAME_options_str  += '<option value="озеро Берёзовое">озеро Берёзовое</option>';
+            NAME_options_str  += '<option value="озеро Бечмеля">озеро Бечмеля</option>';
+            NAME_options_str  += '<option value="озеро Блюдце">озеро Блюдце</option>';
+            NAME_options_str  += '<option value="озеро Большая Ерся">озеро Большая Ерся</option>';
+            NAME_options_str  += '<option value="озеро Большие Бечмеля">озеро Большие Бечмеля</option>';
+            NAME_options_str  += '<option value="озеро Большие Кайлы">озеро Большие Кайлы</option>';
+            NAME_options_str  += '<option value="озеро Большое Горькое">озеро Большое Горькое</option>';
+            NAME_options_str  += '<option value="озеро Большое Долгое">озеро Большое Долгое</option>';
+            NAME_options_str  += '<option value="озеро Большое Медвежье">озеро Большое Медвежье</option>';
+            NAME_options_str  += '<option value="озеро Большое Моховое">озеро Большое Моховое</option>';
+            NAME_options_str  += '<option value="озеро Большое Топольное">озеро Большое Топольное</option>';
+            NAME_options_str  += '<option value="озеро Большое Уренково">озеро Большое Уренково</option>';
+            NAME_options_str  += '<option value="озеро Большой Артуган">озеро Большой Артуган</option>';
+            NAME_options_str  += '<option value="озеро Большой Ромодай">озеро Большой Ромодай</option>';
+            NAME_options_str  += '<option value="озеро Большой Семенович">озеро Большой Семенович</option>';
+            NAME_options_str  += '<option value="озеро Большой Яланкуль">озеро Большой Яланкуль</option>';
+            NAME_options_str  += '<option value="озеро Большой Яркуль">озеро Большой Яркуль</option>';
+            NAME_options_str  += '<option value="озеро Бутырское">озеро Бутырское</option>';
+            NAME_options_str  += '<option value="озеро Быковское">озеро Быковское</option>';
+            NAME_options_str  += '<option value="озеро Варнавское">озеро Варнавское</option>';
+            NAME_options_str  += '<option value="озеро Весёлое">озеро Весёлое</option>';
+            NAME_options_str  += '<option value="озеро Волчье">озеро Волчье</option>';
+            NAME_options_str  += '<option value="озеро Галютиха">озеро Галютиха</option>';
+            NAME_options_str  += '<option value="озеро Ганино">озеро Ганино</option>';
+            NAME_options_str  += '<option value="озеро Глубокое">озеро Глубокое</option>';
+            NAME_options_str  += '<option value="озеро Глухое">озеро Глухое</option>';
+            NAME_options_str  += '<option value="озеро Гогол">озеро Гогол</option>';
+            NAME_options_str  += '<option value="озеро Голенькое">озеро Голенькое</option>';
+            NAME_options_str  += '<option value="озеро Горносталёво">озеро Горносталёво</option>';
+            NAME_options_str  += '<option value="озеро Горчик">озеро Горчик</option>';
+            NAME_options_str  += '<option value="озеро Горшково">озеро Горшково</option>';
+            NAME_options_str  += '<option value="озеро Горькое">озеро Горькое</option>';
+            NAME_options_str  += '<option value="озеро Горькое Панино">озеро Горькое Панино</option>';
+            NAME_options_str  += '<option value="озеро Гребенщиково">озеро Гребенщиково</option>';
+            NAME_options_str  += '<option value="озеро Гусиное">озеро Гусиное</option>';
+            NAME_options_str  += '<option value="озеро Гусиный Затон">озеро Гусиный Затон</option>';
+            NAME_options_str  += '<option value="озеро Дедушкино">озеро Дедушкино</option>';
+            NAME_options_str  += '<option value="озеро Деревенское">озеро Деревенское</option>';
+            NAME_options_str  += '<option value="озеро Дол">озеро Дол</option>';
+            NAME_options_str  += '<option value="озеро Долгое">озеро Долгое</option>';
+            NAME_options_str  += '<option value="озеро Долгушево">озеро Долгушево</option>';
+            NAME_options_str  += '<option value="озеро Домашнее">озеро Домашнее</option>';
+            NAME_options_str  += '<option value="озеро Духовое">озеро Духовое</option>';
+            NAME_options_str  += '<option value="озеро Екимово">озеро Екимово</option>';
+            NAME_options_str  += '<option value="озеро Ембакуль">озеро Ембакуль</option>';
+            NAME_options_str  += '<option value="озеро Епанчино">озеро Епанчино</option>';
+            NAME_options_str  += '<option value="озеро Ефремушка">озеро Ефремушка</option>';
+            NAME_options_str  += '<option value="озеро Жеребячье">озеро Жеребячье</option>';
+            NAME_options_str  += '<option value="озеро Жуково">озеро Жуково</option>';
+            NAME_options_str  += '<option value="озеро Заворотное">озеро Заворотное</option>';
+            NAME_options_str  += '<option value="озеро Затон">озеро Затон</option>';
+            NAME_options_str  += '<option value="озеро Зеново">озеро Зеново</option>';
+            NAME_options_str  += '<option value="озеро Ирбаново">озеро Ирбаново</option>';
+            NAME_options_str  += '<option value="озеро Кабаново">озеро Кабаново</option>';
+            NAME_options_str  += '<option value="озеро Кабанье">озеро Кабанье</option>';
+            NAME_options_str  += '<option value="озеро Казанак">озеро Казанак</option>';
+            NAME_options_str  += '<option value="озеро Каинка">озеро Каинка</option>';
+            NAME_options_str  += '<option value="озеро Кайлы">озеро Кайлы</option>';
+            NAME_options_str  += '<option value="озеро Камбала">озеро Камбала</option>';
+            NAME_options_str  += '<option value="озеро Канаш">озеро Канаш</option>';
+            NAME_options_str  += '<option value="озеро Карасево">озеро Карасево</option>';
+            NAME_options_str  += '<option value="озеро Карасье">озеро Карасье</option>';
+            NAME_options_str  += '<option value="озеро Карачи">озеро Карачи</option>';
+            NAME_options_str  += '<option value="озеро Карган">озеро Карган</option>';
+            NAME_options_str  += '<option value="озеро Квадратка">озеро Квадратка</option>';
+            NAME_options_str  += '<option value="озеро Кириллово">озеро Кириллово</option>';
+            NAME_options_str  += '<option value="озеро Кишка">озеро Кишка</option>';
+            NAME_options_str  += '<option value="озеро Ковалёво">озеро Ковалёво</option>';
+            NAME_options_str  += '<option value="озеро Козлово">озеро Козлово</option>';
+            NAME_options_str  += '<option value="озеро Коленченко">озеро Коленченко</option>';
+            NAME_options_str  += '<option value="озеро Колотухино">озеро Колотухино</option>';
+            NAME_options_str  += '<option value="озеро Конево">озеро Конево</option>';
+            NAME_options_str  += '<option value="озеро Конопляное">озеро Конопляное</option>';
+            NAME_options_str  += '<option value="озеро Корноухово">озеро Корноухово</option>';
+            NAME_options_str  += '<option value="озеро Коровье">озеро Коровье</option>';
+            NAME_options_str  += '<option value="озеро Космолинское">озеро Космолинское</option>';
+            NAME_options_str  += '<option value="озеро Кривенькое">озеро Кривенькое</option>';
+            NAME_options_str  += '<option value="озеро Кривое">озеро Кривое</option>';
+            NAME_options_str  += '<option value="озеро Кузенкуль">озеро Кузенкуль</option>';
+            NAME_options_str  += '<option value="озеро Кузькино">озеро Кузькино</option>';
+            NAME_options_str  += '<option value="озеро Куклей">озеро Куклей</option>';
+            NAME_options_str  += '<option value="озеро Кукуй">озеро Кукуй</option>';
+            NAME_options_str  += '<option value="озеро Куликово">озеро Куликово</option>';
+            NAME_options_str  += '<option value="озеро Курья">озеро Курья</option>';
+            NAME_options_str  += '<option value="озеро Кустарное">озеро Кустарное</option>';
+            NAME_options_str  += '<option value="озеро Кустоватое">озеро Кустоватое</option>';
+            NAME_options_str  += '<option value="озеро Лаврентьево">озеро Лаврентьево</option>';
+            NAME_options_str  += '<option value="озеро Лагери">озеро Лагери</option>';
+            NAME_options_str  += '<option value="озеро Лебяжье">озеро Лебяжье</option>';
+            NAME_options_str  += '<option value="озеро Лесное">озеро Лесное</option>';
+            NAME_options_str  += '<option value="озеро Лешенкино">озеро Лешенкино</option>';
+            NAME_options_str  += '<option value="озеро Лобинское">озеро Лобинское</option>';
+            NAME_options_str  += '<option value="озеро Ломское">озеро Ломское</option>';
+            NAME_options_str  += '<option value="озеро Лопатино">озеро Лопатино</option>';
+            NAME_options_str  += '<option value="озеро Льняное">озеро Льняное</option>';
+            NAME_options_str  += '<option value="озеро Малое">озеро Малое</option>';
+            NAME_options_str  += '<option value="озеро Малое Долгое">озеро Малое Долгое</option>';
+            NAME_options_str  += '<option value="озеро Малое Закатино">озеро Малое Закатино</option>';
+            NAME_options_str  += '<option value="озеро Малое Конево">озеро Малое Конево</option>';
+            NAME_options_str  += '<option value="озеро Малое Медвежье">озеро Малое Медвежье</option>';
+            NAME_options_str  += '<option value="озеро Малое Уренково">озеро Малое Уренково</option>';
+            NAME_options_str  += '<option value="озеро Малостаринское">озеро Малостаринское</option>';
+            NAME_options_str  += '<option value="озеро Малые Бечмеля">озеро Малые Бечмеля</option>';
+            NAME_options_str  += '<option value="озеро Малый Артуган">озеро Малый Артуган</option>';
+            NAME_options_str  += '<option value="озеро Малый Сартлан">озеро Малый Сартлан</option>';
+            NAME_options_str  += '<option value="озеро Малый Семенович">озеро Малый Семенович</option>';
+            NAME_options_str  += '<option value="озеро Малый Яркуль">озеро Малый Яркуль</option>';
+            NAME_options_str  += '<option value="озеро Марково">озеро Марково</option>';
+            NAME_options_str  += '<option value="озеро Махартухино">озеро Махартухино</option>';
+            NAME_options_str  += '<option value="озеро Маховое">озеро Маховое</option>';
+            NAME_options_str  += '<option value="озеро Медвежье">озеро Медвежье</option>';
+            NAME_options_str  += '<option value="озеро Мила">озеро Мила</option>';
+            NAME_options_str  += '<option value="озеро Митрохино">озеро Митрохино</option>';
+            NAME_options_str  += '<option value="озеро Михеево">озеро Михеево</option>';
+            NAME_options_str  += '<option value="озеро Мишино">озеро Мишино</option>';
+            NAME_options_str  += '<option value="озеро Московское">озеро Московское</option>';
+            NAME_options_str  += '<option value="озеро Мохнатое">озеро Мохнатое</option>';
+            NAME_options_str  += '<option value="озеро Моховое">озеро Моховое</option>';
+            NAME_options_str  += '<option value="озеро Мочалы">озеро Мочалы</option>';
+            NAME_options_str  += '<option value="озеро Мочище">озеро Мочище</option>';
+            NAME_options_str  += '<option value="озеро Мысовое">озеро Мысовое</option>';
+            NAME_options_str  += '<option value="озеро Некрасово">озеро Некрасово</option>';
+            NAME_options_str  += '<option value="озеро Орлово">озеро Орлово</option>';
+            NAME_options_str  += '<option value="озеро Островное">озеро Островное</option>';
+            NAME_options_str  += '<option value="озеро Павловка">озеро Павловка</option>';
+            NAME_options_str  += '<option value="озеро Пелагеино">озеро Пелагеино</option>';
+            NAME_options_str  += '<option value="озеро Пеньково">озеро Пеньково</option>';
+            NAME_options_str  += '<option value="озеро Песчанный Залив">озеро Песчанный Залив</option>';
+            NAME_options_str  += '<option value="озеро Песчаное">озеро Песчаное</option>';
+            NAME_options_str  += '<option value="озеро Петрово">озеро Петрово</option>';
+            NAME_options_str  += '<option value="озеро Пивочное">озеро Пивочное</option>';
+            NAME_options_str  += '<option value="озеро Пигуль">озеро Пигуль</option>';
+            NAME_options_str  += '<option value="озеро Плес">озеро Плес</option>';
+            NAME_options_str  += '<option value="озеро Плеханово">озеро Плеханово</option>';
+            NAME_options_str  += '<option value="озеро Плоское">озеро Плоское</option>';
+            NAME_options_str  += '<option value="озеро Плотина">озеро Плотина</option>';
+            NAME_options_str  += '<option value="озеро Плотницкое">озеро Плотницкое</option>';
+            NAME_options_str  += '<option value="озеро Подстанки">озеро Подстанки</option>';
+            NAME_options_str  += '<option value="озеро Покойничек">озеро Покойничек</option>';
+            NAME_options_str  += '<option value="озеро Половинное">озеро Половинное</option>';
+            NAME_options_str  += '<option value="озеро Полуденное">озеро Полуденное</option>';
+            NAME_options_str  += '<option value="озеро Полянино">озеро Полянино</option>';
+            NAME_options_str  += '<option value="озеро Поперечное">озеро Поперечное</option>';
+            NAME_options_str  += '<option value="озеро Портниково">озеро Портниково</option>';
+            NAME_options_str  += '<option value="озеро Пронинское">озеро Пронинское</option>';
+            NAME_options_str  += '<option value="озеро Ржавец">озеро Ржавец</option>';
+            NAME_options_str  += '<option value="озеро Рыбное">озеро Рыбное</option>';
+            NAME_options_str  += '<option value="озеро Сартлан">озеро Сартлан</option>';
+            NAME_options_str  += '<option value="озеро Сарыбалык">озеро Сарыбалык</option>';
+            NAME_options_str  += '<option value="озеро Светлое">озеро Светлое</option>';
+            NAME_options_str  += '<option value="озеро Святое">озеро Святое</option>';
+            NAME_options_str  += '<option value="озеро Селитрино">озеро Селитрино</option>';
+            NAME_options_str  += '<option value="озеро Сибирское">озеро Сибирское</option>';
+            NAME_options_str  += '<option value="озеро Сивухино">озеро Сивухино</option>';
+            NAME_options_str  += '<option value="озеро Сладенькое">озеро Сладенькое</option>';
+            NAME_options_str  += '<option value="озеро Сладкое">озеро Сладкое</option>';
+            NAME_options_str  += '<option value="озеро Собачье">озеро Собачье</option>';
+            NAME_options_str  += '<option value="озеро Согорное">озеро Согорное</option>';
+            NAME_options_str  += '<option value="озеро Солёное">озеро Солёное</option>';
+            NAME_options_str  += '<option value="озеро Сохатино">озеро Сохатино</option>';
+            NAME_options_str  += '<option value="озеро Спартак">озеро Спартак</option>';
+            NAME_options_str  += '<option value="озеро Таганово">озеро Таганово</option>';
+            NAME_options_str  += '<option value="озеро Тандово">озеро Тандово</option>';
+            NAME_options_str  += '<option value="озеро Танчик">озеро Танчик</option>';
+            NAME_options_str  += '<option value="озеро Тарадановское">озеро Тарадановское</option>';
+            NAME_options_str  += '<option value="озеро Тармакуль">озеро Тармакуль</option>';
+            NAME_options_str  += '<option value="озеро Тебис">озеро Тебис</option>';
+            NAME_options_str  += '<option value="озеро Тебисс">озеро Тебисс</option>';
+            NAME_options_str  += '<option value="озеро Тискино">озеро Тискино</option>';
+            NAME_options_str  += '<option value="озеро Толстиково">озеро Толстиково</option>';
+            NAME_options_str  += '<option value="озеро Топкое">озеро Топкое</option>';
+            NAME_options_str  += '<option value="озеро Травное">озеро Травное</option>';
+            NAME_options_str  += '<option value="озеро Труба">озеро Труба</option>';
+            NAME_options_str  += '<option value="озеро Тунгуслы">озеро Тунгуслы</option>';
+            NAME_options_str  += '<option value="озеро Угловое">озеро Угловое</option>';
+            NAME_options_str  += '<option value="озеро Узункуль">озеро Узункуль</option>';
+            NAME_options_str  += '<option value="озеро Урюпино">озеро Урюпино</option>';
+            NAME_options_str  += '<option value="озеро Устиново">озеро Устиново</option>';
+            NAME_options_str  += '<option value="озеро Холопкино">озеро Холопкино</option>';
+            NAME_options_str  += '<option value="озеро Хомутиное">озеро Хомутиное</option>';
+            NAME_options_str  += '<option value="озеро Хорошее">озеро Хорошее</option>';
+            NAME_options_str  += '<option value="озеро Хорошонок">озеро Хорошонок</option>';
+            NAME_options_str  += '<option value="озеро Целебное">озеро Целебное</option>';
+            NAME_options_str  += '<option value="озеро Чаган">озеро Чаган</option>';
+            NAME_options_str  += '<option value="озеро Чаны">озеро Чаны</option>';
+            NAME_options_str  += '<option value="озеро Чебаклы">озеро Чебаклы</option>';
+            NAME_options_str  += '<option value="озеро Чертану куль">озеро Чертану куль</option>';
+            NAME_options_str  += '<option value="озеро Черёмуховое">озеро Черёмуховое</option>';
+            NAME_options_str  += '<option value="озеро Чигиринка">озеро Чигиринка</option>';
+            NAME_options_str  += '<option value="озеро Чирушкино">озеро Чирушкино</option>';
+            NAME_options_str  += '<option value="озеро Чистое">озеро Чистое</option>';
+            NAME_options_str  += '<option value="озеро Чулым">озеро Чулым</option>';
+            NAME_options_str  += '<option value="озеро Чёрное">озеро Чёрное</option>';
+            NAME_options_str  += '<option value="озеро Широкое">озеро Широкое</option>';
+            NAME_options_str  += '<option value="озеро Ширяевское">озеро Ширяевское</option>';
+            NAME_options_str  += '<option value="озеро Шубино">озеро Шубино</option>';
+            NAME_options_str  += '<option value="озеро Юзурган">озеро Юзурган</option>';
+            NAME_options_str  += '<option value="озеро Яровое">озеро Яровое</option>';
+            NAME_options_str  += '<option value="озеро белое">озеро белое</option>';
+            NAME_options_str  += '<option value="озеро карасево">озеро карасево</option>';
+            NAME_options_str  += '<option value="озеро окунёво">озеро окунёво</option>';
+            NAME_options_str  += '<option value="плёс Длинный">плёс Длинный</option>';
+            NAME_options_str  += '<option value="пролив Курья">пролив Курья</option>';
+            NAME_options_str  += '<option value="протока Давыдовская">протока Давыдовская</option>';
+            NAME_options_str  += '<option value="протока Духовая">протока Духовая</option>';
+            NAME_options_str  += '<option value="протока Малая Затонская">протока Малая Затонская</option>';
+            NAME_options_str  += '<option value="протока Марковская (Быструшка)">протока Марковская (Быструшка)</option>';
+            NAME_options_str  += '<option value="протока Матвеевская">протока Матвеевская</option>';
+            NAME_options_str  += '<option value="протока Меретская">протока Меретская</option>';
+            NAME_options_str  += '<option value="протока Симан">протока Симан</option>';
+            NAME_options_str  += '<option value="протока Старица">протока Старица</option>';
+            NAME_options_str  += '<option value="протока Татарская">протока Татарская</option>';
+            NAME_options_str  += '<option value="протока Узенькая">протока Узенькая</option>';
+            NAME_options_str  += '<option value="протока Управительская">протока Управительская</option>';
+            NAME_options_str  += '<option value="протока Чулым">протока Чулым</option>';
+            NAME_options_str  += '<option value="протока Чёртово Горло">протока Чёртово Горло</option>';
+            NAME_options_str  += '<option value="пруд Вознесенский">пруд Вознесенский</option>';
+            NAME_options_str  += '<option value="р. Ирмень">р. Ирмень</option>';
+            NAME_options_str  += '<option value="р. Каргат">р. Каргат</option>';
+            NAME_options_str  += '<option value="р.Чулым">р.Чулым</option>';
+            NAME_options_str  += '<option value="светлое озеро">светлое озеро</option>';
+            NAME_options_str  += '<option value="старица Боган">старица Боган</option>';
+            NAME_options_str  += '<option value="старица Каменка">старица Каменка</option>';
+            NAME_options_str  += '<option value="старица Сузун">старица Сузун</option>';
+            NAME_options_str  += '<option value="урочище Старица">урочище Старица</option>';
+            NAME_options_str  += '<option value="чебулинский пудун">чебулинский пудун</option>';
+            sel_NAME.innerHTML = NAME_options_str;
+            div_NAME.appendChild(sel_NAME);
+            var lab_NAME = document.createElement('div');
+            lab_NAME.innerHTML = 'NAME';
+            lab_NAME.className = 'filterlabel';
+            div_NAME.appendChild(lab_NAME);
+            var reset_NAME = document.createElement('div');
+            reset_NAME.innerHTML = 'clear filter';
+            reset_NAME.className = 'filterlabel';
+            reset_NAME.onclick = function() {
+                var options = document.getElementById("sel_NAME").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_NAME.appendChild(reset_NAME);
+        resetLabels([layer__2,layer_NP_4,layer_boundaryboundarypolygon_5]);
+        map.on("zoomend", function(){
+            resetLabels([layer__2,layer_NP_4,layer_boundaryboundarypolygon_5]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer__2,layer_NP_4,layer_boundaryboundarypolygon_5]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer__2,layer_NP_4,layer_boundaryboundarypolygon_5]);
+        });
+        </script>
+    </body>
+</html>
